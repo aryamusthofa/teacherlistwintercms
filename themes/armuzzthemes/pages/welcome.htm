@@ -1,0 +1,43 @@
+title = "Welcome"
+url = "/"
+layout = "default"
+is_hidden = 0
+==
+<div class="row align-items-center g-4">
+  <div class="col-lg-7">
+    <span class="badge text-bg-primary mb-3">ArmuzzThemes</span>
+
+    <h1 class="fw-bold display-5 mb-3" data-i18n="welcome_title">
+      Dashboard sederhana berbasis Bootstrap
+    </h1>
+
+    <p class="text-muted fs-5 mb-4" data-i18n="welcome_desc">
+      Fokus ke fungsi inti: halaman rapi, navigasi jelas, dan CRUD Teachers siap dipakai.
+    </p>
+
+    <div class="d-flex flex-wrap gap-2">
+      <a href="{{ 'dashboard'|page }}" class="btn btn-primary btn-lg">
+        <i class="bi bi-speedometer2 me-1"></i> <span data-i18n="dashboard">Dashboard</span>
+      </a>
+      <a href="{{ 'teachers'|page }}" class="btn btn-outline-secondary btn-lg">
+        <i class="bi bi-people me-1"></i> <span data-i18n="teachers">Teachers</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted mb-3" data-i18n="quick_links">Quick links</h6>
+        <div class="d-grid gap-2">
+          <a class="btn btn-outline-primary" href="{{ 'teachers_create'|page }}">
+            <i class="bi bi-plus-lg me-1"></i> <span data-i18n="add_teacher">Add Teacher</span>
+          </a>
+          <a class="btn btn-outline-secondary" href="{{ 'teachers'|page }}">
+            <i class="bi bi-list-ul me-1"></i> <span data-i18n="view_teachers">View Teachers</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

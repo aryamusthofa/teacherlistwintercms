@@ -1,0 +1,28 @@
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.card {
+    border: 2px solid;
+    border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) 1;
+    animation: rgb-border 2s linear infinite;
+}
+
+@keyframes rgb-border {
+    0% {
+        border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) 1;
+    }
+    25% {
+        border-image: linear-gradient(to right, violet, red, orange, yellow, green, blue, indigo) 1;
+    }
+    50% {
+        border-image: linear-gradient(to right, indigo, violet, red, orange, yellow, green, blue) 1;
+    }
+    75% {
+        border-image: linear-gradient(to right, blue, indigo, violet, red, orange, yellow, green) 1;
+    }
+    100% {
+        border-image: linear-gradient(to right, green, blue, indigo, violet, red, orange, yellow) 1;
+    }
+}

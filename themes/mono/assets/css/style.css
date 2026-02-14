@@ -1,0 +1,56 @@
+.armuzz-theme-mono {
+  --bs-body-bg: #f6f6f3;
+  --bs-body-color: #111111;
+  --bs-link-color: #111111;
+  --bs-link-hover-color: #000000;
+  --bs-primary: #111111;
+  --bs-primary-rgb: 17, 17, 17;
+  --bs-border-color: rgba(17, 17, 17, 0.35);
+  background: linear-gradient(180deg, #f6f6f3, #f2f2ee);
+}
+
+.armuzz-theme-mono .bg-white {
+  background-color: #ffffff !important;
+}
+
+.armuzz-theme-mono .border-bottom,
+.armuzz-theme-mono .border-top {
+  border-color: rgba(17, 17, 17, 0.25) !important;
+}
+
+.armuzz-theme-mono .container {
+  background-color: #ffffff;
+  border: 2px solid #111111;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.armuzz-theme-mono .card {
+  border: 2px solid #111111;
+  border-radius: 0;
+  box-shadow: none !important;
+}
+
+.armuzz-theme-mono .shadow-sm {
+  box-shadow: none !important;
+}
+
+.armuzz-theme-mono .btn-primary {
+  --bs-btn-bg: #111111;
+  --bs-btn-border-color: #111111;
+  --bs-btn-hover-bg: #000000;
+  --bs-btn-hover-border-color: #000000;
+}
+
+.armuzz-theme-mono .btn-outline-secondary,
+.armuzz-theme-mono .btn-outline-primary {
+  border-width: 2px;
+}
+
+.armuzz-theme-mono .table {
+  border: 2px solid #111111;
+}
+
+.armuzz-theme-mono .table > :not(caption) > * > * {
+  border-bottom-color: rgba(17, 17, 17, 0.35);
+}

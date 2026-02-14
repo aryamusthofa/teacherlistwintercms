@@ -1,0 +1,65 @@
+<!-- Timezone Picker Modal -->
+<div id="tzPicker" class="theme-picker-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="theme-picker" style="max-width:420px">
+    <h5><i class="bi bi-clock me-2"></i><span data-i18n="choose_timezone">Choose Timezone</span></h5>
+    <div class="theme-grid" style="grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px" id="tzGrid"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var grid = document.getElementById('tzGrid');
+  if (!grid) return;
+  var saved = localStorage.getItem('armuzz-tz') || '+7';
+
+  // Common timezone offsets with labels
+  var zones = [
+    { offset: '-12',  label: 'UTC-12',  city: 'Baker Is.' },
+    { offset: '-11',  label: 'UTC-11',  city: 'Samoa' },
+    { offset: '-10',  label: 'UTC-10',  city: 'Hawaii' },
+    { offset: '-9',   label: 'UTC-9',   city: 'Alaska' },
+    { offset: '-8',   label: 'UTC-8',   city: 'LA / PST' },
+    { offset: '-7',   label: 'UTC-7',   city: 'Denver' },
+    { offset: '-6',   label: 'UTC-6',   city: 'Chicago' },
+    { offset: '-5',   label: 'UTC-5',   city: 'New York' },
+    { offset: '-4',   label: 'UTC-4',   city: 'Santiago' },
+    { offset: '-3',   label: 'UTC-3',   city: 'São Paulo' },
+    { offset: '-2',   label: 'UTC-2',   city: 'Atlantic' },
+    { offset: '-1',   label: 'UTC-1',   city: 'Azores' },
+    { offset: '0',    label: 'UTC+0',   city: 'London' },
+    { offset: '+1',   label: 'UTC+1',   city: 'Paris' },
+    { offset: '+2',   label: 'UTC+2',   city: 'Cairo' },
+    { offset: '+3',   label: 'UTC+3',   city: 'Moscow' },
+    { offset: '+3.5', label: 'UTC+3:30',city: 'Tehran' },
+    { offset: '+4',   label: 'UTC+4',   city: 'Dubai' },
+    { offset: '+5',   label: 'UTC+5',   city: 'Karachi' },
+    { offset: '+5.5', label: 'UTC+5:30',city: 'Mumbai' },
+    { offset: '+6',   label: 'UTC+6',   city: 'Dhaka' },
+    { offset: '+7',   label: 'UTC+7',   city: 'Jakarta' },
+    { offset: '+8',   label: 'UTC+8',   city: 'Singapore' },
+    { offset: '+9',   label: 'UTC+9',   city: 'Tokyo' },
+    { offset: '+9.5', label: 'UTC+9:30',city: 'Adelaide' },
+    { offset: '+10',  label: 'UTC+10',  city: 'Sydney' },
+    { offset: '+11',  label: 'UTC+11',  city: 'Noumea' },
+    { offset: '+12',  label: 'UTC+12',  city: 'Auckland' },
+    { offset: '+13',  label: 'UTC+13',  city: 'Tonga' },
+    { offset: '+14',  label: 'UTC+14',  city: 'Kiritimati' },
+  ];
+
+  zones.forEach(function(z) {
+    var div = document.createElement('div');
+    div.className = 'theme-swatch tz-option' + (z.offset === saved ? ' active' : '');
+    div.dataset.tz = z.offset;
+    div.style.padding = '10px 6px';
+    div.onclick = function() {
+      applyTimezone(z.offset);
+      document.getElementById('tzPicker').classList.remove('open');
+    };
+    div.innerHTML =
+      '<div style="font-size:0.85rem;font-weight:700;color:var(--accent)">' + z.label + '</div>' +
+      '<div class="swatch-name" style="font-size:0.7rem;margin-top:2px">' + z.city + '</div>' +
+      '<span class="swatch-check"><i class="bi bi-check-circle-fill"></i></span>';
+    grid.appendChild(div);
+  });
+});
+</script>

@@ -1,0 +1,219 @@
+/**
+ * ArmuzzThemes — Multi-Language System
+ * Client-side i18n using data-i18n attributes.
+ * Table data (user input) is never touched.
+ */
+
+const LANGUAGES = {
+  en: { name: 'English', flag: '🇬🇧' },
+  id: { name: 'Indonesia', flag: '🇮🇩' },
+  ja: { name: '日本語', flag: '🇯🇵' },
+  zh: { name: '中文', flag: '🇨🇳' },
+  es: { name: 'Español', flag: '🇪🇸' },
+  pt: { name: 'Português', flag: '🇧🇷' },
+  ru: { name: 'Русский', flag: '🇷🇺' },
+  ar: { name: 'العربية', flag: '🇸🇦' },
+  hi: { name: 'हिन्दी', flag: '🇮🇳' },
+  tr: { name: 'Türkçe', flag: '🇹🇷' },
+  ko: { name: '한국어', flag: '🇰🇷' },
+  fr: { name: 'Français', flag: '🇫🇷' },
+  de: { name: 'Deutsch', flag: '🇩🇪' },
+  it: { name: 'Italiano', flag: '🇮🇹' },
+  th: { name: 'ไทย', flag: '🇹🇭' },
+  vi: { name: 'Tiếng Việt', flag: '🇻🇳' },
+  nl: { name: 'Nederlands', flag: '🇳🇱' },
+  pl: { name: 'Polski', flag: '🇵🇱' },
+  sv: { name: 'Svenska', flag: '🇸🇪' },
+  uk: { name: 'Українська', flag: '🇺🇦' },
+};
+
+const TRANSLATIONS = {
+  // ── Sidebar ──
+  menu: { en: 'Menu', id: 'Menu', ja: 'メニュー', zh: '菜单', es: 'Menú', pt: 'Menu', ru: 'Меню', ar: 'القائمة', hi: 'मेनू', tr: 'Menü', ko: '메뉴', fr: 'Menu', de: 'Menü', it: 'Menu', th: 'เมนู', vi: 'Menu', nl: 'Menu', pl: 'Menu', sv: 'Meny', uk: 'Меню' },
+  home: { en: 'Home', id: 'Beranda', ja: 'ホーム', zh: '首页', es: 'Inicio', pt: 'Início', ru: 'Главная', ar: 'الرئيسية', hi: 'होम', tr: 'Ana Sayfa', ko: '홈', fr: 'Accueil', de: 'Startseite', it: 'Home', th: 'หน้าแรก', vi: 'Trang chủ', nl: 'Home', pl: 'Strona główna', sv: 'Hem', uk: 'Головна' },
+  dashboard: { en: 'Dashboard', id: 'Dasbor', ja: 'ダッシュボード', zh: '仪表盘', es: 'Panel', pt: 'Painel', ru: 'Панель', ar: 'لوحة التحكم', hi: 'डैशबोर्ड', tr: 'Gösterge Paneli', ko: '대시보드', fr: 'Tableau de bord', de: 'Dashboard', it: 'Cruscotto', th: 'แดชบอร์ด', vi: 'Bảng điều khiển', nl: 'Dashboard', pl: 'Panel', sv: 'Instrumentpanel', uk: 'Панель' },
+  teacher_mgmt: { en: 'Teacher Management', id: 'Manajemen Guru', ja: '教師管理', zh: '教师管理', es: 'Gestión de Profesores', pt: 'Gestão de Professores', ru: 'Управление учителями', ar: 'إدارة المعلمين', hi: 'शिक्षक प्रबंधन', tr: 'Öğretmen Yönetimi', ko: '교사 관리', fr: 'Gestion des Enseignants', de: 'Lehrerverwaltung', it: 'Gestione Insegnanti', th: 'จัดการครู', vi: 'Quản lý Giáo viên', nl: 'Lerarenbeheer', pl: 'Zarządzanie nauczycielami', sv: 'Lärarhantering', uk: 'Управління вчителями' },
+  teachers: { en: 'Teachers', id: 'Guru', ja: '教師', zh: '教师', es: 'Profesores', pt: 'Professores', ru: 'Учителя', ar: 'المعلمون', hi: 'शिक्षक', tr: 'Öğretmenler', ko: '교사', fr: 'Enseignants', de: 'Lehrer', it: 'Insegnanti', th: 'ครู', vi: 'Giáo viên', nl: 'Leraren', pl: 'Nauczyciele', sv: 'Lärare', uk: 'Вчителі' },
+  add_teacher: { en: 'Add Teacher', id: 'Tambah Guru', ja: '教師を追加', zh: '添加教师', es: 'Añadir Profesor', pt: 'Adicionar Professor', ru: 'Добавить учителя', ar: 'إضافة معلم', hi: 'शिक्षक जोड़ें', tr: 'Öğretmen Ekle', ko: '교사 추가', fr: 'Ajouter Enseignant', de: 'Lehrer hinzufügen', it: 'Aggiungi Insegnante', th: 'เพิ่มครู', vi: 'Thêm Giáo viên', nl: 'Leraar toevoegen', pl: 'Dodaj nauczyciela', sv: 'Lägg till lärare', uk: 'Додати вчителя' },
+  change_theme: { en: 'Change Theme', id: 'Ganti Tema', ja: 'テーマ変更', zh: '更换主题', es: 'Cambiar Tema', pt: 'Mudar Tema', ru: 'Сменить тему', ar: 'تغيير السمة', hi: 'थीम बदलें', tr: 'Tema Değiştir', ko: '테마 변경', fr: 'Changer le thème', de: 'Design ändern', it: 'Cambia Tema', th: 'เปลี่ยนธีม', vi: 'Đổi Giao diện', nl: 'Thema wijzigen', pl: 'Zmień motyw', sv: 'Byt tema', uk: 'Змінити тему' },
+  change_language: { en: 'Change Language', id: 'Ganti Bahasa', ja: '言語変更', zh: '更换语言', es: 'Cambiar Idioma', pt: 'Mudar Idioma', ru: 'Сменить язык', ar: 'تغيير اللغة', hi: 'भाषा बदलें', tr: 'Dil Değiştir', ko: '언어 변경', fr: 'Changer la langue', de: 'Sprache ändern', it: 'Cambia Lingua', th: 'เปลี่ยนภาษา', vi: 'Đổi Ngôn ngữ', nl: 'Taal wijzigen', pl: 'Zmień język', sv: 'Byt språk', uk: 'Змінити мову' },
+  collapse: { en: 'Collapse', id: 'Ciutkan', ja: '折りたたむ', zh: '收起', es: 'Colapsar', pt: 'Recolher', ru: 'Свернуть', ar: 'طي', hi: 'छोटा करें', tr: 'Daralt', ko: '접기', fr: 'Réduire', de: 'Einklappen', it: 'Comprimi', th: 'ย่อ', vi: 'Thu gọn', nl: 'Inklappen', pl: 'Zwiń', sv: 'Fäll ihop', uk: 'Згорнути' },
+
+  // ── Topbar ──
+  theme: { en: 'Theme', id: 'Tema', ja: 'テーマ', zh: '主题', es: 'Tema', pt: 'Tema', ru: 'Тема', ar: 'السمة', hi: 'थीम', tr: 'Tema', ko: '테마', fr: 'Thème', de: 'Design', it: 'Tema', th: 'ธีม', vi: 'Giao diện', nl: 'Thema', pl: 'Motyw', sv: 'Tema', uk: 'Тема' },
+  language: { en: 'Language', id: 'Bahasa', ja: '言語', zh: '语言', es: 'Idioma', pt: 'Idioma', ru: 'Язык', ar: 'اللغة', hi: 'भाषा', tr: 'Dil', ko: '언어', fr: 'Langue', de: 'Sprache', it: 'Lingua', th: 'ภาษา', vi: 'Ngôn ngữ', nl: 'Taal', pl: 'Język', sv: 'Språk', uk: 'Мова' },
+
+  // ── Teachers Page ──
+  teachers_title: { en: 'Teachers', id: 'Guru', ja: '教師一覧', zh: '教师列表', es: 'Profesores', pt: 'Professores', ru: 'Учителя', ar: 'المعلمون', hi: 'शिक्षक', tr: 'Öğretmenler', ko: '교사 목록', fr: 'Enseignants', de: 'Lehrer', it: 'Insegnanti', th: 'ครู', vi: 'Giáo viên', nl: 'Leraren', pl: 'Nauczyciele', sv: 'Lärare', uk: 'Вчителі' },
+  teachers_desc: { en: 'Manage teacher data.', id: 'Kelola data guru.', ja: '教師データの管理。', zh: '管理教师数据。', es: 'Administrar datos de profesores.', pt: 'Gerenciar dados de professores.', ru: 'Управление данными учителей.', ar: 'إدارة بيانات المعلمين.', hi: 'शिक्षक डेटा प्रबंधित करें।', tr: 'Öğretmen verilerini yönetin.', ko: '교사 데이터를 관리합니다.', fr: 'Gérer les données des enseignants.', de: 'Lehrerdaten verwalten.', it: 'Gestisci dati insegnanti.', th: 'จัดการข้อมูลครู', vi: 'Quản lý dữ liệu giáo viên.', nl: 'Leraargegevens beheren.', pl: 'Zarządzaj danymi nauczycieli.', sv: 'Hantera lärardata.', uk: 'Управління даними вчителів.' },
+  search_placeholder: { en: 'Search name / subject', id: 'Cari nama / subject', ja: '名前/科目を検索', zh: '搜索姓名/科目', es: 'Buscar nombre / materia', pt: 'Buscar nome / disciplina', ru: 'Поиск по имени / предмету', ar: 'البحث بالاسم / المادة', hi: 'नाम / विषय खोजें', tr: 'İsim / ders ara', ko: '이름/과목 검색', fr: 'Chercher nom / matière', de: 'Name / Fach suchen', it: 'Cerca nome / materia', th: 'ค้นหาชื่อ/วิชา', vi: 'Tìm tên / môn', nl: 'Zoek naam / vak', pl: 'Szukaj nazwiska / przedmiotu', sv: 'Sök namn / ämne', uk: 'Пошук імені / предмета' },
+  filter: { en: 'Filter', id: 'Filter', ja: 'フィルター', zh: '筛选', es: 'Filtrar', pt: 'Filtrar', ru: 'Фильтр', ar: 'تصفية', hi: 'फ़िल्टर', tr: 'Filtrele', ko: '필터', fr: 'Filtrer', de: 'Filtern', it: 'Filtra', th: 'กรอง', vi: 'Lọc', nl: 'Filteren', pl: 'Filtruj', sv: 'Filtrera', uk: 'Фільтр' },
+  all: { en: 'All', id: 'Semua', ja: 'すべて', zh: '全部', es: 'Todos', pt: 'Todos', ru: 'Все', ar: 'الكل', hi: 'सभी', tr: 'Tümü', ko: '전체', fr: 'Tous', de: 'Alle', it: 'Tutti', th: 'ทั้งหมด', vi: 'Tất cả', nl: 'Alle', pl: 'Wszystkie', sv: 'Alla', uk: 'Всі' },
+  active: { en: 'Active', id: 'Aktif', ja: '有効', zh: '有效', es: 'Activo', pt: 'Ativo', ru: 'Активный', ar: 'نشط', hi: 'सक्रिय', tr: 'Aktif', ko: '활성', fr: 'Actif', de: 'Aktiv', it: 'Attivo', th: 'เปิดใช้', vi: 'Hoạt động', nl: 'Actief', pl: 'Aktywny', sv: 'Aktiv', uk: 'Активний' },
+  inactive: { en: 'Inactive', id: 'Nonaktif', ja: '無効', zh: '無效', es: 'Inactivo', pt: 'Inativo', ru: 'Неактивный', ar: 'غير نشط', hi: 'निष्क्रिय', tr: 'Pasif', ko: '비활성', fr: 'Inactif', de: 'Inaktiv', it: 'Inattivo', th: 'ปิดใช้', vi: 'Không hoạt động', nl: 'Inactief', pl: 'Nieaktywny', sv: 'Inaktiv', uk: 'Неактивний' },
+
+  // ── Table Columns ──
+  col_name: { en: 'Name', id: 'Nama', ja: '名前', zh: '姓名', es: 'Nombre', pt: 'Nome', ru: 'Имя', ar: 'الاسم', hi: 'नाम', tr: 'İsim', ko: '이름', fr: 'Nom', de: 'Name', it: 'Nome', th: 'ชื่อ', vi: 'Tên', nl: 'Naam', pl: 'Imię', sv: 'Namn', uk: 'Ім\'я' },
+  col_subject: { en: 'Subject', id: 'Mata Pelajaran', ja: '科目', zh: '科目', es: 'Materia', pt: 'Disciplina', ru: 'Предмет', ar: 'المادة', hi: 'विषय', tr: 'Ders', ko: '과목', fr: 'Matière', de: 'Fach', it: 'Materia', th: 'วิชา', vi: 'Môn học', nl: 'Vak', pl: 'Przedmiot', sv: 'Ämne', uk: 'Предмет' },
+  col_created: { en: 'Created At', id: 'Dibuat Pada', ja: '作成日時', zh: '创建时间', es: 'Creado El', pt: 'Criado Em', ru: 'Дата создания', ar: 'تاريخ الإنشاء', hi: 'बनाया गया', tr: 'Oluşturulma', ko: '생성일', fr: 'Créé le', de: 'Erstellt am', it: 'Creato il', th: 'สร้างเมื่อ', vi: 'Tạo lúc', nl: 'Aangemaakt op', pl: 'Utworzono', sv: 'Skapad', uk: 'Створено' },
+  col_updated: { en: 'Updated At', id: 'Diperbarui', ja: '更新日時', zh: '更新时间', es: 'Actualizado', pt: 'Atualizado Em', ru: 'Обновлено', ar: 'تاريخ التحديث', hi: 'अपडेट किया गया', tr: 'Güncelleme', ko: '수정일', fr: 'Mis à jour', de: 'Aktualisiert am', it: 'Aggiornato il', th: 'อัปเดตเมื่อ', vi: 'Cập nhật lúc', nl: 'Bijgewerkt op', pl: 'Zaktualizowano', sv: 'Uppdaterad', uk: 'Оновлено' },
+  col_status: { en: 'Status', id: 'Status', ja: 'ステータス', zh: '状态', es: 'Estado', pt: 'Status', ru: 'Статус', ar: 'الحالة', hi: 'स्थिति', tr: 'Durum', ko: '상태', fr: 'Statut', de: 'Status', it: 'Stato', th: 'สถานะ', vi: 'Trạng thái', nl: 'Status', pl: 'Status', sv: 'Status', uk: 'Статус' },
+  col_action: { en: 'Action', id: 'Aksi', ja: '操作', zh: '操作', es: 'Acción', pt: 'Ação', ru: 'Действие', ar: 'الإجراء', hi: 'कार्रवाई', tr: 'İşlem', ko: '작업', fr: 'Action', de: 'Aktion', it: 'Azione', th: 'การดำเนินการ', vi: 'Hành động', nl: 'Actie', pl: 'Akcja', sv: 'Åtgärd', uk: 'Дія' },
+
+  // ── Buttons ──
+  btn_edit: { en: 'Edit', id: 'Edit', ja: '編集', zh: '编辑', es: 'Editar', pt: 'Editar', ru: 'Изменить', ar: 'تعديل', hi: 'संपादित करें', tr: 'Düzenle', ko: '편집', fr: 'Modifier', de: 'Bearbeiten', it: 'Modifica', th: 'แก้ไข', vi: 'Sửa', nl: 'Bewerken', pl: 'Edytuj', sv: 'Redigera', uk: 'Редагувати' },
+  btn_delete: { en: 'Delete', id: 'Hapus', ja: '削除', zh: '删除', es: 'Eliminar', pt: 'Excluir', ru: 'Удалить', ar: 'حذف', hi: 'हटाएं', tr: 'Sil', ko: '삭제', fr: 'Supprimer', de: 'Löschen', it: 'Elimina', th: 'ลบ', vi: 'Xóa', nl: 'Verwijderen', pl: 'Usuń', sv: 'Radera', uk: 'Видалити' },
+  btn_activate: { en: 'Activate', id: 'Aktifkan', ja: '有効にする', zh: '激活', es: 'Activar', pt: 'Ativar', ru: 'Активировать', ar: 'تفعيل', hi: 'सक्रिय करें', tr: 'Etkinleştir', ko: '활성화', fr: 'Activer', de: 'Aktivieren', it: 'Attiva', th: 'เปิดใช้', vi: 'Kích hoạt', nl: 'Activeren', pl: 'Aktywuj', sv: 'Aktivera', uk: 'Активувати' },
+  btn_deactivate: { en: 'Deactivate', id: 'Nonaktifkan', ja: '無効にする', zh: '停用', es: 'Desactivar', pt: 'Desativar', ru: 'Деактивировать', ar: 'تعطيل', hi: 'निष्क्रिय करें', tr: 'Devre dışı bırak', ko: '비활성화', fr: 'Désactiver', de: 'Deaktivieren', it: 'Disattiva', th: 'ปิดใช้', vi: 'Tắt', nl: 'Deactiveren', pl: 'Dezaktywuj', sv: 'Inaktivera', uk: 'Деактивувати' },
+  btn_save: { en: 'Save', id: 'Simpan', ja: '保存', zh: '保存', es: 'Guardar', pt: 'Salvar', ru: 'Сохранить', ar: 'حفظ', hi: 'सहेजें', tr: 'Kaydet', ko: '저장', fr: 'Enregistrer', de: 'Speichern', it: 'Salva', th: 'บันทึก', vi: 'Lưu', nl: 'Opslaan', pl: 'Zapisz', sv: 'Spara', uk: 'Зберегти' },
+  cancel: { en: 'Cancel', id: 'Batal', ja: 'キャンセル', zh: '取消', es: 'Cancelar', pt: 'Cancelar', ru: 'Отмена', ar: 'إلغاء', hi: 'रद्द करें', tr: 'İptal', ko: '취소', fr: 'Annuler', de: 'Abbrechen', it: 'Annulla', th: 'ยกเลิก', vi: 'Hủy', nl: 'Annuleren', pl: 'Anuluj', sv: 'Avbryt', uk: 'Скасувати' },
+  refresh: { en: 'Refresh', id: 'Segarkan', ja: '更新', zh: '刷新', es: 'Actualizar', pt: 'Atualizar', ru: 'Обновить', ar: 'تحديث', hi: 'ताज़ा करें', tr: 'Yenile', ko: '새로고침', fr: 'Rafraîchir', de: 'Aktualisieren', it: 'Aggiorna', th: 'รีเฟรช', vi: 'Tải lại', nl: 'Vernieuwen', pl: 'Odśwież', sv: 'Uppdatera', uk: 'Оновити' },
+  back: { en: 'Back', id: 'Kembali', ja: '戻る', zh: '返回', es: 'Volver', pt: 'Voltar', ru: 'Назад', ar: 'رجوع', hi: 'वापस', tr: 'Geri', ko: '뒤로', fr: 'Retour', de: 'Zurück', it: 'Indietro', th: 'กลับ', vi: 'Quay lại', nl: 'Terug', pl: 'Wstecz', sv: 'Tillbaka', uk: 'Назад' },
+
+  // ── Form Labels ──
+  edit_teacher: { en: 'Edit Teacher', id: 'Edit Guru', ja: '教師を編集', zh: '编辑教师', es: 'Editar Profesor', pt: 'Editar Professor', ru: 'Редактировать учителя', ar: 'تعديل المعلم', hi: 'शिक्षक संपादित करें', tr: 'Öğretmen Düzenle', ko: '교사 편집', fr: 'Modifier l\'Enseignant', de: 'Lehrer bearbeiten', it: 'Modifica Insegnante', th: 'แก้ไขครู', vi: 'Sửa Giáo viên', nl: 'Leraar bewerken', pl: 'Edytuj nauczyciela', sv: 'Redigera lärare', uk: 'Редагувати вчителя' },
+  edit_teacher_desc: { en: 'Update teacher data.', id: 'Perbarui data guru.', ja: '教師データを更新。', zh: '更新教师数据。', es: 'Actualizar datos del profesor.', pt: 'Atualizar dados do professor.', ru: 'Обновить данные учителя.', ar: 'تحديث بيانات المعلم.', hi: 'शिक्षक डेटा अपडेट करें।', tr: 'Öğretmen verilerini güncelle.', ko: '교사 데이터를 업데이트합니다.', fr: 'Mettre à jour les données.', de: 'Lehrerdaten aktualisieren.', it: 'Aggiorna dati insegnante.', th: 'อัปเดตข้อมูลครู', vi: 'Cập nhật dữ liệu giáo viên.', nl: 'Leraargegevens bijwerken.', pl: 'Zaktualizuj dane nauczyciela.', sv: 'Uppdatera lärardata.', uk: 'Оновити дані вчителя.' },
+  add_teacher_desc: { en: 'Add a new teacher.', id: 'Tambah data guru baru.', ja: '新しい教師を追加。', zh: '添加新教师。', es: 'Añadir nuevo profesor.', pt: 'Adicionar novo professor.', ru: 'Добавить нового учителя.', ar: 'إضافة معلم جديد.', hi: 'नया शिक्षक जोड़ें।', tr: 'Yeni öğretmen ekle.', ko: '새 교사를 추가합니다.', fr: 'Ajouter un nouvel enseignant.', de: 'Neuen Lehrer hinzufügen.', it: 'Aggiungi nuovo insegnante.', th: 'เพิ่มครูใหม่', vi: 'Thêm giáo viên mới.', nl: 'Nieuwe leraar toevoegen.', pl: 'Dodaj nowego nauczyciela.', sv: 'Lägg till ny lärare.', uk: 'Додати нового вчителя.' },
+  lbl_name: { en: 'Name', id: 'Nama', ja: '名前', zh: '姓名', es: 'Nombre', pt: 'Nome', ru: 'Имя', ar: 'الاسم', hi: 'नाम', tr: 'İsim', ko: '이름', fr: 'Nom', de: 'Name', it: 'Nome', th: 'ชื่อ', vi: 'Tên', nl: 'Naam', pl: 'Imię', sv: 'Namn', uk: 'Ім\'я' },
+  lbl_subject: { en: 'Subject', id: 'Mata Pelajaran', ja: '科目', zh: '科目', es: 'Materia', pt: 'Disciplina', ru: 'Предмет', ar: 'المادة', hi: 'विषय', tr: 'Ders', ko: '과목', fr: 'Matière', de: 'Fach', it: 'Materia', th: 'วิชา', vi: 'Môn học', nl: 'Vak', pl: 'Przedmiot', sv: 'Ämne', uk: 'Предмет' },
+  lbl_active: { en: 'Active', id: 'Aktif', ja: '有効', zh: '有效', es: 'Activo', pt: 'Ativo', ru: 'Активный', ar: 'نشط', hi: 'सक्रिय', tr: 'Aktif', ko: '활성', fr: 'Actif', de: 'Aktiv', it: 'Attivo', th: 'เปิดใช้', vi: 'Hoạt động', nl: 'Actief', pl: 'Aktywny', sv: 'Aktiv', uk: 'Активний' },
+  ph_name: { en: 'Teacher name', id: 'Nama guru', ja: '教師名', zh: '教师姓名', es: 'Nombre del profesor', pt: 'Nome do professor', ru: 'Имя учителя', ar: 'اسم المعلم', hi: 'शिक्षक का नाम', tr: 'Öğretmen adı', ko: '교사 이름', fr: 'Nom de l\'enseignant', de: 'Lehrername', it: 'Nome insegnante', th: 'ชื่อครู', vi: 'Tên giáo viên', nl: 'Naam leraar', pl: 'Imię nauczyciela', sv: 'Lärarnamn', uk: 'Ім\'я вчителя' },
+  ph_subject: { en: 'Subject / field', id: 'Mata pelajaran / bidang', ja: '科目 / 分野', zh: '科目 / 领域', es: 'Materia / campo', pt: 'Disciplina / área', ru: 'Предмет / область', ar: 'المادة / المجال', hi: 'विषय / क्षेत्र', tr: 'Ders / alan', ko: '과목 / 분야', fr: 'Matière / domaine', de: 'Fach / Bereich', it: 'Materia / campo', th: 'วิชา / สาขา', vi: 'Môn học / lĩnh vực', nl: 'Vak / gebied', pl: 'Przedmiot / dziedzina', sv: 'Ämne / område', uk: 'Предмет / галузь' },
+
+  // ── Misc ──
+  no_data: { en: 'No data.', id: 'Tidak ada data.', ja: 'データがありません。', zh: '暂无数据。', es: 'Sin datos.', pt: 'Sem dados.', ru: 'Нет данных.', ar: 'لا توجد بيانات.', hi: 'कोई डेटा नहीं।', tr: 'Veri yok.', ko: '데이터가 없습니다.', fr: 'Aucune donnée.', de: 'Keine Daten.', it: 'Nessun dato.', th: 'ไม่มีข้อมูล', vi: 'Không có dữ liệu.', nl: 'Geen gegevens.', pl: 'Brak danych.', sv: 'Inga data.', uk: 'Немає даних.' },
+  total: { en: 'Total', id: 'Total', ja: '合計', zh: '总计', es: 'Total', pt: 'Total', ru: 'Всего', ar: 'المجموع', hi: 'कुल', tr: 'Toplam', ko: '합계', fr: 'Total', de: 'Gesamt', it: 'Totale', th: 'ทั้งหมด', vi: 'Tổng', nl: 'Totaal', pl: 'Łącznie', sv: 'Totalt', uk: 'Всього' },
+  choose_theme: { en: 'Choose Theme', id: 'Pilih Tema', ja: 'テーマを選択', zh: '选择主题', es: 'Elegir Tema', pt: 'Escolher Tema', ru: 'Выбрать тему', ar: 'اختر السمة', hi: 'थीम चुनें', tr: 'Tema Seç', ko: '테마 선택', fr: 'Choisir le thème', de: 'Design wählen', it: 'Scegli Tema', th: 'เลือกธีม', vi: 'Chọn Giao diện', nl: 'Thema kiezen', pl: 'Wybierz motyw', sv: 'Välj tema', uk: 'Обрати тему' },
+  choose_language: { en: 'Choose Language', id: 'Pilih Bahasa', ja: '言語を選択', zh: '选择语言', es: 'Elegir Idioma', pt: 'Escolher Idioma', ru: 'Выбрать язык', ar: 'اختر اللغة', hi: 'भाषा चुनें', tr: 'Dil Seç', ko: '언어 선택', fr: 'Choisir la langue', de: 'Sprache wählen', it: 'Scegli Lingua', th: 'เลือกภาษา', vi: 'Chọn Ngôn ngữ', nl: 'Taal kiezen', pl: 'Wybierz język', sv: 'Välj språk', uk: 'Обрати мову' },
+  change_timezone: { en: 'Change Timezone', id: 'Ganti Zona Waktu', ja: 'タイムゾーン変更', zh: '更换时区', es: 'Cambiar Zona Horaria', pt: 'Mudar Fuso Horário', ru: 'Сменить часовой пояс', ar: 'تغيير المنطقة الزمنية', hi: 'समय क्षेत्र बदलें', tr: 'Saat Dilimini Değiştir', ko: '시간대 변경', fr: 'Changer le fuseau horaire', de: 'Zeitzone ändern', it: 'Cambia Fuso Orario', th: 'เปลี่ยนเขตเวลา', vi: 'Đổi Múi giờ', nl: 'Tijdzone wijzigen', pl: 'Zmień strefę czasową', sv: 'Byt tidszon', uk: 'Змінити часовий пояс' },
+  choose_timezone: { en: 'Choose Timezone', id: 'Pilih Zona Waktu', ja: 'タイムゾーンを選択', zh: '选择时区', es: 'Elegir Zona Horaria', pt: 'Escolher Fuso Horário', ru: 'Выбрать часовой пояс', ar: 'اختر المنطقة الزمنية', hi: 'समय क्षेत्र चुनें', tr: 'Saat Dilimini Seç', ko: '시간대 선택', fr: 'Choisir le fuseau horaire', de: 'Zeitzone wählen', it: 'Scegli Fuso Orario', th: 'เลือกเขตเวลา', vi: 'Chọn Múi giờ', nl: 'Tijdzone kiezen', pl: 'Wybierz strefę czasową', sv: 'Välj tidszon', uk: 'Обрати часовий пояс' },
+  copyright: { en: 'All rights reserved.', id: 'Hak cipta dilindungi.', ja: 'All rights reserved.', zh: '版权所有。', es: 'Todos los derechos reservados.', pt: 'Todos os direitos reservados.', ru: 'Все права защищены.', ar: 'جميع الحقوق محفوظة.', hi: 'सर्वाधिकार सुरक्षित।', tr: 'Tüm hakları saklıdır.', ko: '모든 권리 보유.', fr: 'Tous droits réservés.', de: 'Alle Rechte vorbehalten.', it: 'Tutti i diritti riservati.', th: 'สงวนลิขสิทธิ์', vi: 'Bản quyền được bảo lưu.', nl: 'Alle rechten voorbehouden.', pl: 'Wszelkie prawa zastrzeżone.', sv: 'Alla rättigheter förbehållna.', uk: 'Всі права захищені.' },
+  check_input: { en: 'Please check your input.', id: 'Periksa kembali input kamu.', ja: '入力内容を確認してください。', zh: '请检查您的输入。', es: 'Por favor verifica tu entrada.', pt: 'Por favor verifique sua entrada.', ru: 'Проверьте введённые данные.', ar: 'يرجى التحقق من المدخلات.', hi: 'कृपया अपना इनपुट जांचें।', tr: 'Girişinizi kontrol edin.', ko: '입력을 확인해주세요.', fr: 'Veuillez vérifier votre saisie.', de: 'Bitte Eingabe überprüfen.', it: 'Controlla il tuo input.', th: 'กรุณาตรวจสอบข้อมูล', vi: 'Vui lòng kiểm tra lại.', nl: 'Controleer uw invoer.', pl: 'Sprawdź dane wejściowe.', sv: 'Kontrollera din inmatning.', uk: 'Перевірте введені дані.' },
+
+  // ── Welcome / Dashboard ──
+  welcome_title: { en: 'Simple Dashboard based on Bootstrap', id: 'Dashboard sederhana berbasis Bootstrap', ja: 'Bootstrapベースのシンプルなダッシュボード', zh: '基于Bootstrap的简易仪表盘', es: 'Panel simple basado en Bootstrap', pt: 'Painel simples baseado em Bootstrap', ru: 'Простая панель на базе Bootstrap', ar: 'لوحة تحكم بسيطة بناءً على Bootstrap', hi: 'Bootstrap पर आधारित सरल डैशबोर्ड', tr: 'Bootstrap tabanlı basit gösterge paneli', ko: 'Bootstrap 기반 간단한 대시보드', fr: 'Tableau de bord simple basé sur Bootstrap', de: 'Einfaches Dashboard basierend auf Bootstrap', it: 'Cruscotto semplice basato su Bootstrap', th: 'แดชบอร์ดง่ายๆ ด้วย Bootstrap', vi: 'Bảng điều khiển đơn giản dựa trên Bootstrap', nl: 'Eenvoudig dashboard gebaseerd op Bootstrap', pl: 'Prosty panel oparty na Bootstrap', sv: 'Enkel instrumentpanel baserad på Bootstrap', uk: 'Простий дашборд на базі Bootstrap' },
+  welcome_desc: { en: 'Focus on core functions: clean pages, clear navigation, and Teachers CRUD ready.', id: 'Fokus ke fungsi inti: halaman rapi, navigasi jelas, dan CRUD Teachers siap dipakai.', ja: 'コア機能に集中：整ったページ、明確なナビゲーション、教師CRUDが利用可能。', zh: '专注核心功能：整洁页面、清晰导航和教师CRUD可用。', es: 'Enfoque en funciones principales: páginas limpias, navegación clara y CRUD de profesores listo.', pt: 'Foco nas funções principais: páginas limpas, navegação clara e CRUD de professores pronto.', ru: 'Фокус на основных функциях: чистые страницы, понятная навигация и CRUD учителей.', ar: 'التركيز على الوظائف الأساسية: صفحات نظيفة وتنقل واضح وCRUD المعلمين جاهز.', hi: 'मुख्य कार्यों पर ध्यान: साफ पेज, स्पष्ट नेविगेशन, और CRUD तैयार।', tr: 'Temel işlevlere odaklanın: temiz sayfalar, net gezinme ve Öğretmen CRUD hazır.', ko: '핵심 기능에 집중: 깔끔한 페이지, 명확한 탐색, 교사 CRUD 준비 완료.', fr: 'Focus sur les fonctions essentielles : pages propres, navigation claire et CRUD prêt.', de: 'Fokus auf Kernfunktionen: saubere Seiten, klare Navigation und CRUD bereit.', it: 'Focus sulle funzioni principali: pagine pulite, navigazione chiara e CRUD pronto.', th: 'มุ่งเน้นฟังก์ชันหลัก: หน้าเรียบร้อย นำทางชัดเจน และ CRUD พร้อมใช้', vi: 'Tập trung vào chức năng cốt lõi: trang gọn gàng, điều hướng rõ ràng, CRUD sẵn sàng.', nl: 'Focus op kernfuncties: nette pagina\'s, duidelijke navigatie en CRUD klaar.', pl: 'Skupienie na kluczowych funkcjach: czyste strony, jasna nawigacja i CRUD gotowy.', sv: 'Fokus på kärnfunktioner: rena sidor, tydlig navigering och CRUD redo.', uk: 'Фокус на основних функціях: чисті сторінки, зрозуміла навігація та CRUD готовий.' },
+  quick_links: { en: 'Quick links', id: 'Link cepat', ja: 'クイックリンク', zh: '快捷链接', es: 'Enlaces rápidos', pt: 'Links rápidos', ru: 'Быстрые ссылки', ar: 'روابط سريعة', hi: 'त्वरित लिंक', tr: 'Hızlı bağlantılar', ko: '빠른 링크', fr: 'Liens rapides', de: 'Schnellzugriffe', it: 'Link rapidi', th: 'ลิงก์ด่วน', vi: 'Liên kết nhanh', nl: 'Snelle links', pl: 'Szybkie linki', sv: 'Snabblänkar', uk: 'Швидкі посилання' },
+  view_teachers: { en: 'View Teachers', id: 'Lihat Guru', ja: '教師一覧を表示', zh: '查看教师', es: 'Ver Profesores', pt: 'Ver Professores', ru: 'Просмотр учителей', ar: 'عرض المعلمين', hi: 'शिक्षक देखें', tr: 'Öğretmenleri Görüntüle', ko: '교사 보기', fr: 'Voir les Enseignants', de: 'Lehrer anzeigen', it: 'Visualizza Insegnanti', th: 'ดูครู', vi: 'Xem Giáo viên', nl: 'Leraren bekijken', pl: 'Zobacz nauczycieli', sv: 'Visa lärare', uk: 'Переглянути вчителів' },
+
+  // ── Dashboard ──
+  dash_desc: { en: 'Data summary & quick access.', id: 'Ringkasan data & akses cepat.', ja: 'データの概要とクイックアクセス。', zh: '数据摘要和快速访问。', es: 'Resumen de datos y acceso rápido.', pt: 'Resumo de dados e acesso rápido.', ru: 'Сводка данных и быстрый доступ.', ar: 'ملخص البيانات والوصول السريع.', hi: 'डेटा सारांश और त्वरित एक्सेस।', tr: 'Veri özeti ve hızlı erişim.', ko: '데이터 요약 및 빠른 접근.', fr: 'Résumé des données et accès rapide.', de: 'Datenzusammenfassung und Schnellzugriff.', it: 'Riepilogo dati e accesso rapido.', th: 'สรุปข้อมูลและเข้าถึงด่วน', vi: 'Tóm tắt dữ liệu & truy cập nhanh.', nl: 'Datasamenvatting en snelle toegang.', pl: 'Podsumowanie danych i szybki dostęp.', sv: 'Datasammanfattning och snabbåtkomst.', uk: 'Зведення даних і швидкий доступ.' },
+  total_teachers: { en: 'Total Teachers', id: 'Total Guru', ja: '教師数合計', zh: '教师总数', es: 'Total Profesores', pt: 'Total de Professores', ru: 'Всего учителей', ar: 'إجمالي المعلمين', hi: 'कुल शिक्षक', tr: 'Toplam Öğretmen', ko: '전체 교사', fr: 'Total Enseignants', de: 'Lehrer gesamt', it: 'Totale Insegnanti', th: 'ครูทั้งหมด', vi: 'Tổng Giáo viên', nl: 'Totaal Leraren', pl: 'Łącznie nauczycieli', sv: 'Totalt lärare', uk: 'Всього вчителів' },
+  recent_teachers: { en: 'Recent Teachers', id: 'Guru Terbaru', ja: '最近の教師', zh: '最近的教师', es: 'Profesores Recientes', pt: 'Professores Recentes', ru: 'Последние учителя', ar: 'المعلمون الأخيرون', hi: 'हालिया शिक्षक', tr: 'Son Öğretmenler', ko: '최근 교사', fr: 'Enseignants Récents', de: 'Letzte Lehrer', it: 'Insegnanti Recenti', th: 'ครูล่าสุด', vi: 'Giáo viên gần đây', nl: 'Recente Leraren', pl: 'Ostatni nauczyciele', sv: 'Senaste lärare', uk: 'Останні вчителі' },
+  view_all: { en: 'View all', id: 'Lihat semua', ja: 'すべて表示', zh: '查看全部', es: 'Ver todo', pt: 'Ver tudo', ru: 'Показать все', ar: 'عرض الكل', hi: 'सभी देखें', tr: 'Tümünü gör', ko: '전체 보기', fr: 'Tout voir', de: 'Alle anzeigen', it: 'Vedi tutto', th: 'ดูทั้งหมด', vi: 'Xem tất cả', nl: 'Alles bekijken', pl: 'Zobacz wszystko', sv: 'Visa alla', uk: 'Переглянути все' },
+  chart_timeline: { en: 'Teachers Added (Last 7 Days)', id: 'Guru Ditambahkan (7 Hari Terakhir)', ja: '追加された教師（過去7日間）', zh: '新增教师（最近7天）', es: 'Profesores Añadidos (Últimos 7 Días)', pt: 'Professores Adicionados (Últimos 7 Dias)', ru: 'Учителя за последние 7 дней', ar: 'المعلمون المضافون (آخر 7 أيام)', hi: 'जोड़े गए शिक्षक (पिछले 7 दिन)', tr: 'Eklenen Öğretmenler (Son 7 Gün)', ko: '추가된 교사 (최근 7일)', fr: 'Enseignants Ajoutés (7 derniers jours)', de: 'Hinzugefügte Lehrer (Letzte 7 Tage)', it: 'Insegnanti Aggiunti (Ultimi 7 Giorni)', th: 'ครูที่เพิ่ม (7 วันล่าสุด)', vi: 'Giáo viên Thêm (7 ngày qua)', nl: 'Toegevoegde Leraren (Laatste 7 Dagen)', pl: 'Dodani nauczyciele (ostatnie 7 dni)', sv: 'Tillagda lärare (Senaste 7 dagarna)', uk: 'Додані вчителі (Останні 7 днів)' },
+  chart_subjects: { en: 'Subject Distribution', id: 'Distribusi Mata Pelajaran', ja: '科目別分布', zh: '科目分布', es: 'Distribución de Materias', pt: 'Distribuição de Disciplinas', ru: 'Распределение предметов', ar: 'توزيع المواد', hi: 'विषय वितरण', tr: 'Ders Dağılımı', ko: '과목 분포', fr: 'Répartition des Matières', de: 'Fachverteilung', it: 'Distribuzione Materie', th: 'การกระจายวิชา', vi: 'Phân bố Môn học', nl: 'Vakverdeling', pl: 'Rozkład przedmiotów', sv: 'Ämnesfördelning', uk: 'Розподіл предметів' },
+  chart_status: { en: 'Active vs Inactive Overview', id: 'Gambaran Aktif vs Nonaktif', ja: '有効/無効の概要', zh: '活跃与不活跃概览', es: 'Vista Activos vs Inactivos', pt: 'Visão Ativos vs Inativos', ru: 'Обзор: активные и неактивные', ar: 'نظرة عامة: نشط/غير نشط', hi: 'सक्रिय बनाम निष्क्रिय', tr: 'Aktif ve Pasif Genel Bakış', ko: '활성 vs 비활성 개요', fr: 'Aperçu Actifs vs Inactifs', de: 'Aktiv vs. Inaktiv Übersicht', it: 'Panoramica Attivi vs Inattivi', th: 'ภาพรวมเปิด/ปิด', vi: 'Tổng quan Hoạt động/Không HĐ', nl: 'Actief vs Inactief Overzicht', pl: 'Przegląd aktywnych i nieaktywnych', sv: 'Aktiv vs Inaktiv Översikt', uk: 'Огляд: активні та неактивні' },
+
+  // ── Flash Messages ──
+  flash_teacher_saved: { en: 'Teacher saved successfully.', id: 'Guru berhasil disimpan.', ja: '教師が保存されました。', zh: '教师已成功保存。', es: 'Profesor guardado exitosamente.', pt: 'Professor salvo com sucesso.', ru: 'Учитель успешно сохранён.', ar: 'تم حفظ المعلم بنجاح.', hi: 'शिक् शिक्षक सफलतापूर्वक सहेजा गया।', tr: 'Öğretmen başarıyla kaydedildi.', ko: '교사가 성공적으로 저장되었습니다.', fr: 'Enseignant enregistré avec succès.', de: 'Lehrer erfolgreich gespeichert.', it: 'Insegnante salvato con successo.', th: 'บันทึกครูสำเร็จ', vi: 'Giáo viên đã được lưu.', nl: 'Leraar succesvol opgeslagen.', pl: 'Nauczyciel zapisany pomyślnie.', sv: 'Lärare sparad.', uk: 'Вчителя успішно збережено.' },
+  flash_teacher_created: { en: 'Teacher created successfully.', id: 'Guru berhasil dibuat.', ja: '教師が作成されました。', zh: '教师已成功创建。', es: 'Profesor creado exitosamente.', pt: 'Professor criado com sucesso.', ru: 'Учитель успешно создан.', ar: 'تم إنشاء المعلم بنجاح.', hi: 'शिक्षक सफलतापूर्वक बनाया गया।', tr: 'Öğretmen başarıyla oluşturuldu.', ko: '교사가 성공적으로 생성되었습니다.', fr: 'Enseignant créé avec succès.', de: 'Lehrer erfolgreich erstellt.', it: 'Insegnante creato con successo.', th: 'สร้างครูสำเร็จ', vi: 'Giáo viên đã được tạo.', nl: 'Leraar succesvol aangemaakt.', pl: 'Nauczyciel utworzony pomyślnie.', sv: 'Lärare skapad.', uk: 'Вчителя успішно створено.' },
+  flash_teacher_deleted: { en: 'Teacher deleted successfully.', id: 'Guru berhasil dihapus.', ja: '教師が削除されました。', zh: '教师已成功删除。', es: 'Profesor eliminado exitosamente.', pt: 'Professor excluído com sucesso.', ru: 'Учитель успешно удалён.', ar: 'تم حذف المعلم بنجاح.', hi: 'शिक्षक सफलतापूर्वक हटाया गया।', tr: 'Öğretmen başarıyla silindi.', ko: '교사가 성공적으로 삭제되었습니다.', fr: 'Enseignant supprimé avec succès.', de: 'Lehrer erfolgreich gelöscht.', it: 'Insegnante eliminato con successo.', th: 'ลบครูสำเร็จ', vi: 'Giáo viên đã được xóa.', nl: 'Leraar succesvol verwijderd.', pl: 'Nauczyciel usunięty pomyślnie.', sv: 'Lärare raderad.', uk: 'Вчителя успішно видалено.' },
+  flash_status_changed: { en: 'Teacher status changed.', id: 'Status guru berhasil diubah.', ja: '教師のステータスが変更されました。', zh: '教师状态已更改。', es: 'Estado del profesor cambiado.', pt: 'Status do professor alterado.', ru: 'Статус учителя изменён.', ar: 'تم تغيير حالة المعلم.', hi: 'शिक्षक की स्थिति बदल दी गई।', tr: 'Öğretmen durumu değiştirildi.', ko: '교사 상태가 변경되었습니다.', fr: 'Statut de l\'enseignant modifié.', de: 'Lehrerstatus geändert.', it: 'Stato insegnante cambiato.', th: 'เปลี่ยนสถานะครูสำเร็จ', vi: 'Trạng thái giáo viên đã thay đổi.', nl: 'Status leraar gewijzigd.', pl: 'Status nauczyciela zmieniony.', sv: 'Lärarstatus ändrad.', uk: 'Статус вчителя змінено.' },
+
+  // ── Validation Messages ──
+  name_required: { en: 'Name is required.', id: 'Nama wajib diisi.', ja: '名前は必須です。', zh: '姓名为必填项。', es: 'El nombre es obligatorio.', pt: 'O nome é obrigatório.', ru: 'Имя обязательно.', ar: 'الاسم مطلوب.', hi: 'नाम आवश्यक है।', tr: 'İsim zorunludur.', ko: '이름은 필수입니다.', fr: 'Le nom est requis.', de: 'Name ist erforderlich.', it: 'Il nome è obbligatorio.', th: 'ต้องกรอกชื่อ', vi: 'Tên là bắt buộc.', nl: 'Naam is verplicht.', pl: 'Imię jest wymagane.', sv: 'Namn krävs.', uk: 'Ім\'я обов\'язкове.' },
+  name_duplicate: { en: 'This name is already taken. Please use a different name.', id: 'Nama ini sudah digunakan. Gunakan nama lain.', ja: 'この名前は既に使用されています。別の名前を使用してください。', zh: '此名称已被使用，请使用其他名称。', es: 'Este nombre ya está en uso. Use uno diferente.', pt: 'Este nome já está em uso. Use outro.', ru: 'Это имя уже занято. Используйте другое.', ar: 'هذا الاسم مستخدم بالفعل. استخدم اسمًا آخر.', hi: 'यह नाम पहले से उपयोग में है। कृपया अलग नाम दें।', tr: 'Bu isim zaten kullanılıyor. Farklı bir isim kullanın.', ko: '이 이름은 이미 사용 중입니다. 다른 이름을 사용하세요.', fr: 'Ce nom est déjà utilisé. Veuillez en choisir un autre.', de: 'Dieser Name wird bereits verwendet. Bitte wählen Sie einen anderen.', it: 'Questo nome è già in uso. Usarne un altro.', th: 'ชื่อนี้ถูกใช้แล้ว กรุณาใช้ชื่ออื่น', vi: 'Tên này đã được sử dụng. Vui lòng dùng tên khác.', nl: 'Deze naam is al in gebruik. Kies een andere.', pl: 'Ta nazwa jest już zajęta. Użyj innej.', sv: 'Detta namn används redan. Välj ett annat.', uk: 'Це ім\'я вже зайнято. Використайте інше.' },
+  subject_required: { en: 'Subject is required.', id: 'Mata pelajaran wajib diisi.', ja: '科目は必須です。', zh: '科目为必填项。', es: 'La materia es obligatoria.', pt: 'A disciplina é obrigatória.', ru: 'Предмет обязателен.', ar: 'المادة مطلوبة.', hi: 'विषय आवश्यक है।', tr: 'Ders zorunludur.', ko: '과목은 필수입니다.', fr: 'La matière est requise.', de: 'Fach ist erforderlich.', it: 'La materia è obbligatoria.', th: 'ต้องกรอกวิชา', vi: 'Môn học là bắt buộc.', nl: 'Vak is verplicht.', pl: 'Przedmiot jest wymagany.', sv: 'Ämne krävs.', uk: 'Предмет обов\'язковий.' },
+};
+
+/**
+ * Apply language to all elements with data-i18n attribute
+ */
+function applyLang(code) {
+  if (!LANGUAGES[code]) code = 'en';
+  localStorage.setItem('armuzz-lang', code);
+
+  // Update all elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n').trim();
+    if (TRANSLATIONS[key] && TRANSLATIONS[key][code]) {
+      if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
+        el.setAttribute('placeholder', TRANSLATIONS[key][code]);
+      } else {
+        el.textContent = TRANSLATIONS[key][code];
+      }
+    }
+  });
+
+  // Update active language indicator
+  document.querySelectorAll('.lang-option').forEach(function (el) {
+    el.classList.toggle('active', el.dataset.lang === code);
+  });
+
+  // Set html dir for RTL languages (Arabic)
+  document.documentElement.dir = (code === 'ar') ? 'rtl' : 'ltr';
+
+  // Translate any existing flash/alert messages
+  translateFlashMessages(code);
+}
+
+/**
+ * Translate flash messages and validation errors that use {{key}} pattern
+ */
+function translateFlashMessages(code) {
+  if (!code) code = getSavedLang();
+
+  // Find all alert elements (flash messages, validation errors, etc.)
+  var targets = document.querySelectorAll('.alert, .flash-message, [data-control="flash-message"], .invalid-feedback');
+  targets.forEach(function (el) {
+    translateTextContent(el, code);
+  });
+}
+
+/**
+ * Replace {{key}} patterns in element text with translations
+ */
+function translateTextContent(el, code) {
+  // Check direct text nodes and child text nodes
+  var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+  var node;
+  while (node = walker.nextNode()) {
+    var text = node.nodeValue;
+    if (!text) continue;
+    var replaced = text.replace(/\{\{(\w+)\}\}/g, function (match, key) {
+      if (TRANSLATIONS[key] && TRANSLATIONS[key][code]) {
+        return TRANSLATIONS[key][code];
+      }
+      return match;
+    });
+    if (replaced !== text) {
+      node.nodeValue = replaced;
+    }
+  }
+}
+
+/**
+ * Get the saved language or default to English
+ */
+function getSavedLang() {
+  return localStorage.getItem('armuzz-lang') || 'en';
+}
+
+/**
+ * MutationObserver: auto-translate new flash messages and validation errors
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var observer = new MutationObserver(function (mutations) {
+    var code = getSavedLang();
+    mutations.forEach(function (m) {
+      m.addedNodes.forEach(function (node) {
+        if (node.nodeType === 1) {
+          // Translate the node itself if it's a flash/alert
+          if (node.classList && (node.classList.contains('alert') || node.classList.contains('flash-message') || node.classList.contains('invalid-feedback'))) {
+            translateTextContent(node, code);
+          }
+          // Translate any child alerts/flash messages
+          var children = node.querySelectorAll && node.querySelectorAll('.alert, .flash-message, .invalid-feedback');
+          if (children) {
+            children.forEach(function (child) {
+              translateTextContent(child, code);
+            });
+          }
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+});

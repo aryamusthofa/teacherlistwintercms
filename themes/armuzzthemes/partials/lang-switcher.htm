@@ -1,0 +1,32 @@
+<!-- Language Picker Modal -->
+<div id="langPicker" class="theme-picker-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="theme-picker">
+    <h5 data-i18n="choose_language">Choose Language</h5>
+    <div class="theme-grid" id="langGrid"></div>
+  </div>
+</div>
+
+<script>
+  // Build language grid dynamically from LANGUAGES constant (defined in lang.js)
+  document.addEventListener('DOMContentLoaded', function() {
+    var grid = document.getElementById('langGrid');
+    if (!grid || typeof LANGUAGES === 'undefined') return;
+    var saved = getSavedLang();
+
+    Object.keys(LANGUAGES).forEach(function(code) {
+      var lang = LANGUAGES[code];
+      var div = document.createElement('div');
+      div.className = 'theme-swatch lang-option' + (code === saved ? ' active' : '');
+      div.dataset.lang = code;
+      div.onclick = function() {
+        applyLang(code);
+        document.getElementById('langPicker').classList.remove('open');
+      };
+      div.innerHTML =
+        '<div style="font-size:2rem;margin-bottom:6px">' + lang.flag + '</div>' +
+        '<div class="swatch-name">' + lang.name + '</div>' +
+        '<span class="swatch-check"><i class="bi bi-check-circle-fill"></i></span>';
+      grid.appendChild(div);
+    });
+  });
+</script>

@@ -1,0 +1,74 @@
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th style="min-width:220px">Name</th>
+            <th style="min-width:180px">Subject</th>
+            <th style="min-width:120px">Status</th>
+            <th class="text-end" style="min-width:220px">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if teachers|length == 0 %}
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">
+                Tidak ada data.
+              </td>
+            </tr>
+          {% endif %}
+
+          {% for t in teachers %}
+            <tr>
+              <td class="fw-semibold">{{ t.name }}</td>
+              <td class="text-muted">{{ t.subject }}</td>
+              <td>
+                {% if t.is_active %}
+                  <span class="badge text-bg-success">Active</span>
+                {% else %}
+                  <span class="badge text-bg-secondary">Inactive</span>
+                {% endif %}
+              </td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ 'teachers_edit'|page({ id: t.id }) }}">
+                  <i class="bi bi-pencil-square me-1"></i> Edit
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  data-request="onToggleActive"
+                  data-request-data="id: '{{ t.id }}'"
+                  data-request-confirm="Ubah status teacher ini?"
+                  data-request-success="window.location.reload()"
+                >
+                  {% if t.is_active %}
+                    <i class="bi bi-slash-circle me-1"></i> Deactivate
+                  {% else %}
+                    <i class="bi bi-check-circle me-1"></i> Activate
+                  {% endif %}
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-request="onDelete"
+                  data-request-data="id: '{{ t.id }}'"
+                  data-request-confirm="Hapus teacher ini?"
+                  data-request-success="window.location.reload()"
+                >
+                  <i class="bi bi-trash me-1"></i> Delete
+                </button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer bg-white d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+    <small class="text-muted">
+      Total: {{ pager.total }}
+    </small>
+    {% partial "pagination" pager=pager filters=filters %}
+  </div>
+</div>

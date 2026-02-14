@@ -1,0 +1,138 @@
+<div class="theme-picker-overlay" id="themePicker" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="theme-picker">
+    <h5><i class="bi bi-palette me-2"></i><span data-i18n="choose_theme">Choose Theme</span></h5>
+    <div class="theme-grid">
+
+      <div class="theme-swatch" data-theme="default" onclick="applyTheme('default')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#f4f6f9"></span>
+          <span class="swatch-dot" style="background:#0d6efd"></span>
+          <span class="swatch-dot" style="background:#212529"></span>
+        </div>
+        <div class="swatch-name">Default</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="cyberpunk" onclick="applyTheme('cyberpunk')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#0a0a0f"></span>
+          <span class="swatch-dot" style="background:#ff2d95"></span>
+          <span class="swatch-dot" style="background:#00f0ff"></span>
+        </div>
+        <div class="swatch-name">Cyberpunk</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="dark" onclick="applyTheme('dark')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#1a1a2e"></span>
+          <span class="swatch-dot" style="background:#6c63ff"></span>
+          <span class="swatch-dot" style="background:#e8e8e8"></span>
+        </div>
+        <div class="swatch-name">Dark</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="forest" onclick="applyTheme('forest')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#2d4a3e"></span>
+          <span class="swatch-dot" style="background:#4a8c5c"></span>
+          <span class="swatch-dot" style="background:#f0ebe3"></span>
+        </div>
+        <div class="swatch-name">Forest</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="glass" onclick="applyTheme('glass')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#667eea"></span>
+          <span class="swatch-dot" style="background:#764ba2"></span>
+          <span class="swatch-dot" style="background:#ffd700"></span>
+        </div>
+        <div class="swatch-name">Glass</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="light" onclick="applyTheme('light')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#ffffff;border:1px solid #ccc"></span>
+          <span class="swatch-dot" style="background:#111111"></span>
+          <span class="swatch-dot" style="background:#fafafa"></span>
+        </div>
+        <div class="swatch-name">Light</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="minimalist" onclick="applyTheme('minimalist')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#f8f8f8"></span>
+          <span class="swatch-dot" style="background:#555555"></span>
+          <span class="swatch-dot" style="background:#eeeeee"></span>
+        </div>
+        <div class="swatch-name">Minimalist</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="mono" onclick="applyTheme('mono')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#1a1a1a"></span>
+          <span class="swatch-dot" style="background:#f5f5f0"></span>
+          <span class="swatch-dot" style="background:#d0d0c8"></span>
+        </div>
+        <div class="swatch-name">Mono</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="nord" onclick="applyTheme('nord')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#2e3440"></span>
+          <span class="swatch-dot" style="background:#88c0d0"></span>
+          <span class="swatch-dot" style="background:#eceff4"></span>
+        </div>
+        <div class="swatch-name">Nord</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="ocean" onclick="applyTheme('ocean')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#0f1923"></span>
+          <span class="swatch-dot" style="background:#00bcd4"></span>
+          <span class="swatch-dot" style="background:#e0f0ff"></span>
+        </div>
+        <div class="swatch-name">Ocean</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="rgb" onclick="applyTheme('rgb')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#ff0040"></span>
+          <span class="swatch-dot" style="background:#00ff88"></span>
+          <span class="swatch-dot" style="background:#0088ff"></span>
+        </div>
+        <div class="swatch-name">RGB</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="sunset" onclick="applyTheme('sunset')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#2d1b4e"></span>
+          <span class="swatch-dot" style="background:#ff6b35"></span>
+          <span class="swatch-dot" style="background:#fef3e2"></span>
+        </div>
+        <div class="swatch-name">Sunset</div>
+      </div>
+
+      <div class="theme-swatch" data-theme="vintage" onclick="applyTheme('vintage')">
+        <i class="bi bi-check-circle-fill swatch-check"></i>
+        <div class="swatch-colors">
+          <span class="swatch-dot" style="background:#3e2c1c"></span>
+          <span class="swatch-dot" style="background:#8b4513"></span>
+          <span class="swatch-dot" style="background:#f5f0e1"></span>
+        </div>
+        <div class="swatch-name">Vintage</div>
+      </div>
+
+    </div>
+  </div>
+</div>

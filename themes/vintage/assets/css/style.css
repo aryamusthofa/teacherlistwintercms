@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+body {
+    background-color: #f5f5dc;
+    color: #5d4037;
+    font-family: 'Special Elite', cursive;
+    filter: sepia(0.3);
+}
+
+.card {
+    background-color: #efebe9;
+    border: 1px solid #a1887f;
+}

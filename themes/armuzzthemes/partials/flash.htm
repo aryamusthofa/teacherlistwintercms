@@ -1,0 +1,7 @@
+{% flash %}
+  <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert" style="animation: slideDown 0.4s cubic-bezier(0.34,1.56,0.64,1) both">
+    <i class="bi bi-{% if type == 'success' %}check-circle{% elseif type == 'error' or type == 'danger' %}exclamation-triangle{% elseif type == 'warning' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endflash %}

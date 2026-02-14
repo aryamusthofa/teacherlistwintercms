@@ -1,0 +1,56 @@
+:root {
+  color-scheme: dark;
+}
+
+.armuzz-theme-nord {
+  --bs-body-bg: #2e3440;
+  --bs-body-color: #eceff4;
+  --bs-link-color: #88c0d0;
+  --bs-link-hover-color: #8fbcbb;
+  --bs-primary: #88c0d0;
+  --bs-primary-rgb: 136, 192, 208;
+  --bs-border-color: rgba(236, 239, 244, 0.14);
+  background: linear-gradient(135deg, #2e3440, #242a33);
+}
+
+.armuzz-theme-nord .bg-white {
+  background-color: #3b4252 !important;
+}
+
+.armuzz-theme-nord .border-bottom,
+.armuzz-theme-nord .border-top {
+  border-color: rgba(236, 239, 244, 0.12) !important;
+}
+
+.armuzz-theme-nord .card,
+.armuzz-theme-nord .dropdown-menu {
+  background-color: #434c5e;
+  border-color: rgba(236, 239, 244, 0.12);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+}
+
+.armuzz-theme-nord .text-muted {
+  color: rgba(236, 239, 244, 0.7) !important;
+}
+
+.armuzz-theme-nord .form-control,
+.armuzz-theme-nord .form-select,
+.armuzz-theme-nord .input-group-text {
+  background-color: rgba(46, 52, 64, 0.75);
+  border-color: rgba(236, 239, 244, 0.14);
+  color: #eceff4;
+}
+
+.armuzz-theme-nord .form-control::placeholder {
+  color: rgba(236, 239, 244, 0.55);
+}
+
+.armuzz-theme-nord .table {
+  --bs-table-color: #eceff4;
+  --bs-table-border-color: rgba(236, 239, 244, 0.12);
+}
+
+.armuzz-theme-nord .table-light {
+  --bs-table-bg: rgba(46, 52, 64, 0.5);
+  --bs-table-color: #eceff4;
+}

@@ -1,0 +1,160 @@
+title = "Teachers"
+url = "/teachers"
+layout = "default"
+is_hidden = 0
+==
+<?php
+use Illuminate\Support\Facades\Schema;
+
+function loadTeachers()
+{
+    $this['teachersReady'] = Schema::hasTable('latihan_teachers');
+    $filters = [
+        'q' => trim((string) Input::get('q', '')),
+        'status' => (string) Input::get('status', 'all'),
+        'page' => max(1, (int) Input::get('page', 1)),
+    ];
+
+    if (!$this['teachersReady']) {
+        $this['teachers'] = [];
+        $this['pager'] = ['current' => 1, 'last' => 1, 'total' => 0, 'perPage' => 10];
+        $this['filters'] = $filters;
+        return;
+    }
+
+    $perPage = 10;
+    $baseQuery = Db::table('latihan_teachers');
+
+    if ($filters['q'] !== '') {
+        $q = $filters['q'];
+        $baseQuery->where(function ($query) use ($q) {
+            $query->where('name', 'like', "%{$q}%")
+                ->orWhere('subject', 'like', "%{$q}%");
+        });
+    }
+
+    if ($filters['status'] === 'active') {
+        $baseQuery->where('is_active', 1);
+    } elseif ($filters['status'] === 'inactive') {
+        $baseQuery->where('is_active', 0);
+    } else {
+        $filters['status'] = 'all';
+    }
+
+    $total = (clone $baseQuery)->count();
+    $last = max(1, (int) ceil($total / $perPage));
+    $page = min($filters['page'], $last);
+    $filters['page'] = $page;
+    $this['filters'] = $filters;
+
+    $items = (clone $baseQuery)
+        ->orderByDesc('id')
+        ->offset(($page - 1) * $perPage)
+        ->limit($perPage)
+        ->get();
+
+    $this['teachers'] = $items;
+    $this['pager'] = [
+        'current' => $page,
+        'last' => $last,
+        'total' => $total,
+        'perPage' => $perPage,
+    ];
+}
+
+function onStart()
+{
+    $this->loadTeachers();
+}
+
+function onDelete()
+{
+    if (!Schema::hasTable('latihan_teachers')) {
+        Flash::error('Tabel latihan_teachers belum tersedia.');
+        return;
+    }
+
+    $id = (int) post('id');
+    if ($id <= 0) {
+        Flash::error('ID tidak valid.');
+        return;
+    }
+
+    Db::table('latihan_teachers')->where('id', $id)->delete();
+    Flash::success('Teacher berhasil dihapus.');
+}
+
+function onToggleActive()
+{
+    if (!Schema::hasTable('latihan_teachers')) {
+        Flash::error('Tabel latihan_teachers belum tersedia.');
+        return;
+    }
+
+    $id = (int) post('id');
+    if ($id <= 0) {
+        Flash::error('ID tidak valid.');
+        return;
+    }
+
+    $teacher = Db::table('latihan_teachers')->where('id', $id)->first();
+    if (!$teacher) {
+        Flash::error('Teacher tidak ditemukan.');
+        return;
+    }
+
+    Db::table('latihan_teachers')->where('id', $id)->update([
+        'is_active' => $teacher->is_active ? 0 : 1,
+        'updated_at' => date('Y-m-d H:i:s'),
+    ]);
+
+    Flash::success('Status teacher berhasil diubah.');
+}
+?>
+==
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h3 class="fw-bold mb-1">Teachers</h3>
+    <p class="text-muted mb-0">Kelola data teachers.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-primary" href="{{ 'teachers_create'|page }}">
+      <i class="bi bi-plus-lg me-1"></i> Add Teacher
+    </a>
+  </div>
+</div>
+
+{% if not teachersReady %}
+  <div class="alert alert-warning">
+    Tabel <code>latihan_teachers</code> belum ada. Jalankan migration plugin <code>Latihan.Latihan</code> dulu.
+  </div>
+{% else %}
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <form class="row g-2 align-items-center" method="get" action="{{ 'teachers'|page }}">
+        <div class="col-12 col-md-6">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input class="form-control" name="q" value="{{ filters.q }}" placeholder="Cari nama / subject">
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <select class="form-select" name="status">
+            <option value="all" {% if filters.status == 'all' %}selected{% endif %}>All</option>
+            <option value="active" {% if filters.status == 'active' %}selected{% endif %}>Active</option>
+            <option value="inactive" {% if filters.status == 'inactive' %}selected{% endif %}>Inactive</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-3 d-grid">
+          <button class="btn btn-outline-secondary" type="submit">
+            Filter
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="teachersTable">
+    {% partial "teachers/table" %}
+  </div>
+{% endif %}

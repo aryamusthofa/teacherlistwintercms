@@ -1,0 +1,65 @@
+<aside class="sidebar" id="appSidebar">
+  <a class="sidebar-brand" href="{{ 'welcome'|page }}">
+    <span class="brand-icon">A</span>
+    <span class="brand-text">Armuzz<span style="color:var(--accent)">Themes</span></span>
+  </a>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label" data-i18n="menu">Menu</div>
+    <ul style="padding:0;margin:0">
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'welcome' %}active{% endif %}" href="{{ 'welcome'|page }}">
+          <i class="bi bi-house-door nav-icon"></i>
+          <span class="nav-text" data-i18n="home">Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'dashboard' %}active{% endif %}" href="{{ 'dashboard'|page }}">
+          <i class="bi bi-speedometer2 nav-icon"></i>
+          <span class="nav-text" data-i18n="dashboard">Dashboard</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-label" data-i18n="teacher_mgmt">Teacher Management</div>
+    <ul style="padding:0;margin:0">
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'teachers' %}active{% endif %}" href="{{ 'teachers'|page }}">
+          <i class="bi bi-people nav-icon"></i>
+          <span class="nav-text" data-i18n="teachers">Teachers</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'teachers_create' %}active{% endif %}" href="{{ 'teachers_create'|page }}">
+          <i class="bi bi-person-plus nav-icon"></i>
+          <span class="nav-text" data-i18n="add_teacher">Add Teacher</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-theme-section">
+    <button class="theme-switcher-trigger" onclick="document.getElementById('langPicker').classList.add('open')">
+      <i class="bi bi-translate nav-icon"></i>
+      <span class="trigger-text" data-i18n="change_language">Change Language</span>
+    </button>
+    <button class="theme-switcher-trigger" onclick="document.getElementById('tzPicker').classList.add('open')">
+      <i class="bi bi-clock nav-icon"></i>
+      <span class="trigger-text" data-i18n="change_timezone">Change Timezone</span>
+    </button>
+    <button class="theme-switcher-trigger" onclick="document.getElementById('themePicker').classList.add('open')">
+      <i class="bi bi-palette nav-icon"></i>
+      <span class="trigger-text" data-i18n="change_theme">Change Theme</span>
+    </button>
+  </div>
+
+  <div class="sidebar-toggle">
+    <button onclick="toggleSidebar()">
+      <i class="bi bi-chevron-bar-left" id="sidebarToggleIcon"></i>
+      <span class="toggle-text" data-i18n="collapse">Collapse</span>
+    </button>
+  </div>
+</aside>
+
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>

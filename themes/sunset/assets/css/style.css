@@ -1,0 +1,39 @@
+.armuzz-theme-sunset {
+  --bs-body-bg: #fff4ec;
+  --bs-body-color: #2a1b1a;
+  --bs-link-color: #7c3aed;
+  --bs-link-hover-color: #6d28d9;
+  --bs-primary: #7c3aed;
+  --bs-primary-rgb: 124, 58, 237;
+  --bs-border-color: rgba(42, 27, 26, 0.15);
+  background: radial-gradient(900px 450px at 20% 0%, rgba(255, 107, 107, 0.35), rgba(0, 0, 0, 0) 65%),
+    radial-gradient(1000px 550px at 85% 15%, rgba(255, 209, 102, 0.32), rgba(0, 0, 0, 0) 60%),
+    linear-gradient(135deg, #ffe5d1, #fff4ec 45%, #f1f5ff);
+}
+
+.armuzz-theme-sunset .container {
+  background-color: rgba(255, 255, 255, 0.72);
+  border-radius: 16px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  box-shadow: 0 20px 55px rgba(42, 27, 26, 0.12);
+}
+
+.armuzz-theme-sunset .bg-white {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.armuzz-theme-sunset .border-bottom,
+.armuzz-theme-sunset .border-top {
+  border-color: rgba(42, 27, 26, 0.14) !important;
+}
+
+.armuzz-theme-sunset .card {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-color: rgba(42, 27, 26, 0.12);
+  box-shadow: 0 16px 40px rgba(42, 27, 26, 0.1);
+}
+
+.armuzz-theme-sunset .text-muted {
+  color: rgba(42, 27, 26, 0.6) !important;
+}

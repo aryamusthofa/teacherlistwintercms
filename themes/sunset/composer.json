@@ -1,0 +1,28 @@
+{
+    "name": "armuzz/sunset-theme",
+    "type": "winter-theme",
+    "description": "Sunset theme for Winter CMS",
+    "keywords": ["winter", "cms", "theme", "sunset"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexey Bobkov",
+            "email": "aleksey.bobkov@gmail.com",
+            "role": "Co-founder"
+        },
+        {
+            "name": "Samuel Georges",
+            "email": "daftspunky@gmail.com",
+            "role": "Co-founder"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
