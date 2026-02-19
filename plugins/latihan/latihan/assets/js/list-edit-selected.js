@@ -28,8 +28,6 @@
     editBtn.id = 'latihan-edit-selected-btn';
     editBtn.type = 'button';
     editBtn.className = 'btn btn-secondary';
-    editBtn.setAttribute('data-request', 'onEdit');
-    editBtn.setAttribute('data-request-confirm', 'Pilih minimal satu record untuk diedit');
     editBtn.innerHTML = '<i class="icon-edit"></i> Edit Selected';
     
     // Click handler
