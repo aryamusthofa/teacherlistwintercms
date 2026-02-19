@@ -4,4 +4,12 @@
 
 <div class="form-container">
     <?= $this->formRender() ?>
+    <div class="form-buttons" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+        <button type="submit" class="btn btn-primary" onclick="document.querySelector('form').submit()">
+            <i class="icon-save"></i> Simpan
+        </button>
+        <a href="<?= Backend::url('latihan/latihan/teachers') ?>" class="btn btn-secondary">
+            <i class="icon-times"></i> Batal
+        </a>
+    </div>
 </div>
