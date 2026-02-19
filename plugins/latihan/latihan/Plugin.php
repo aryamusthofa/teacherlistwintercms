@@ -20,4 +20,23 @@ class Plugin extends PluginBase
             \Latihan\Latihan\Components\TeacherList::class => 'teacherList',
         ];
     }
+
+    public function registerNavigation()
+    {
+        return [
+            'main-menu-latihan' => [
+                'label' => 'Data Sekolah',
+                'url' => \Backend::url('latihan/latihan/teachers'),
+                'icon' => 'icon-graduation-cap',
+                'order' => 500,
+                'sideMenu' => [
+                    'side-menu-teachers' => [
+                        'label' => 'Teachers',
+                        'icon' => 'icon-users',
+                        'url' => \Backend::url('latihan/latihan/teachers'),
+                    ]
+                ]
+            ]
+        ];
+    }
 }

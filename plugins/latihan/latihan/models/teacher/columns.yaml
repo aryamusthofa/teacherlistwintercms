@@ -1,0 +1,19 @@
+columns:
+    name:
+        label: Teacher Name
+        type: text
+        searchable: true
+        sortable: true
+    subject:
+        label: Subject
+        type: text
+        searchable: true
+        sortable: true
+    is_active:
+        label: Status
+        type: switch
+        sortable: true
+    is_verified:
+        label: Verified
+        type: switch
+        sortable: true

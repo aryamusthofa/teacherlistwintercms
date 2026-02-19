@@ -1,0 +1,8 @@
+title: Teachers List
+modelClass: Latihan\Latihan\Models\Teacher
+list: $/latihan/latihan/models/teacher/columns.yaml
+showCheckboxes: true
+toolbar:
+    buttons: list_toolbar
+search:
+    prompt: backend::lang.list.search_prompt
