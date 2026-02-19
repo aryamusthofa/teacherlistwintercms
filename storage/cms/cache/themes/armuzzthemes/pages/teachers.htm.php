@@ -1,6 +1,6 @@
 <?php 
 use Illuminate\Support\Facades\Schema;
-class Cms698d5e20cbadb020689639_8a396c84149d60bce6a90087032c4bf5Class extends Cms\Classes\PageCode
+class Cms6996e0a8bedf9805281379_0e74f6230636a735bd87c74918205f6dClass extends Cms\Classes\PageCode
 {
 public function loadTeachers()
 {

@@ -5,8 +5,13 @@ use Backend\Facades\BackendMenu;
 
 class Teachers extends Controller
 {
-    public $implement = ['Backend\Behaviors\ListController'];
+    public $implement = [
+        'Backend\Behaviors\ListController',
+        'Backend\Behaviors\FormController'
+    ];
+
     public $listConfig = 'config_list.yaml';
+    public $formConfig = 'config_form.yaml';
 
     public function __construct()
     {
