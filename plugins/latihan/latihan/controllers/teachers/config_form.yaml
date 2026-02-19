@@ -1,0 +1,19 @@
+modelClass: Latihan\Latihan\Models\Teacher
+form:
+  fields:
+    name:
+      label: Name
+      type: text
+      span: auto
+    subject:
+      label: Subject
+      type: text
+      span: auto
+    is_active:
+      label: Active
+      type: switch
+      default: 1
+    is_verified:
+      label: Verified
+      type: switch
+      default: 0
