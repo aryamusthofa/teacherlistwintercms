@@ -3,7 +3,7 @@ modelClass: Latihan\Latihan\Models\Teacher
 list: $/latihan/latihan/models/teacher/columns.yaml
 showCheckboxes: true
 toolbar:
-    buttons: /plugins/latihan/latihan/controllers/teachers/_toolbar.htm
+    buttons: /plugins/latihan/latihan/controllers/teachers/toolbar.htm
 recordUrl: update/{:id}
 search:
     prompt: backend::lang.list.search_prompt
