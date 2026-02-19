@@ -49,8 +49,6 @@ class Plugin extends PluginBase
             }
             if (method_exists($controller, 'addJs')) {
                 $controller->addJs('/plugins/latihan/latihan/assets/js/backend-watermark.js');
-                // Inject Edit Selected button injector for list views
-                $controller->addJs('/plugins/latihan/latihan/assets/js/list-edit-selected.js');
             }
         });
     }

@@ -1,29 +1,39 @@
-<div class="btn-toolbar" role="toolbar">
-  <div class="btn-group me-2" role="group">
-    <a class="btn btn-primary" href="<?= Backend::url('latihan/latihan/teachers/create') ?>"><i class="icon-plus"></i> Tambah Data</a>
-    <button class="btn btn-secondary" id="latihan-edit-selected"><i class="icon-edit"></i> Edit Selected</button>
-  </div>
+<div class="button-strip">
+    <a class="btn btn-primary" href="<?= Backend::url('latihan/latihan/teachers/create') ?>" data-request="onCreate">
+        <i class="icon-plus"></i> New Teachers List
+    </a>
+    
+    <button class="btn btn-secondary" data-request="onDelete" data-request-confirm="Hapus data yang dipilih?">
+        <i class="icon-trash"></i> Delete selected
+    </button>
+    
+    <button class="btn btn-secondary" id="edit-selected-btn" onclick="editSelected()">
+        <i class="icon-edit"></i> Edit Selected
+    </button>
 </div>
 
 <script>
-(function(){
-  document.addEventListener('DOMContentLoaded', function(){
-    var btn = document.getElementById('latihan-edit-selected');
-    if (!btn) return;
-    btn.addEventListener('click', function(){
-      // collect checked ids from list
-      var ids = [];
-      document.querySelectorAll('input[name="checked[]"]:checked').forEach(function(ch){
-        ids.push(ch.value);
-      });
-      if (ids.length === 0) {
-        window.alert('Pilih minimal satu record untuk diedit.');
+function editSelected(){
+    var form = document.querySelector('form[data-request]');
+    if (!form) {
+        alert('Form tidak ditemukan');
         return;
-      }
-      // open edit form for first selected id
-      var target = '<?= Backend::url('latihan/latihan/teachers/update') ?>/' + ids[0];
-      window.location.href = target;
+    }
+    
+    var checked = form.querySelectorAll('input[type="checkbox"]:checked');
+    var ids = [];
+    
+    checked.forEach(function(ch){
+        // Cari value dari checkbox
+        var val = ch.value || ch.getAttribute('data-id');
+        if (val) ids.push(val);
     });
-  });
-})();
+    
+    if (ids.length === 0) {
+        alert('Pilih minimal satu record untuk diedit.');
+        return;
+    }
+    
+    window.location.href = '<?= Backend::url('latihan/latihan/teachers/update') ?>/' + ids[0];
+}
 </script>
