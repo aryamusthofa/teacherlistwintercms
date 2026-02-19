@@ -39,4 +39,17 @@ class Plugin extends PluginBase
             ]
         ];
     }
+    
+    public function boot()
+    {
+        // Inject backend watermark assets on backend pages
+        \Event::listen('backend.page.beforeDisplay', function($controller, $action, $params) {
+            if (method_exists($controller, 'addCss')) {
+                $controller->addCss('/plugins/latihan/latihan/assets/css/backend-watermark.css');
+            }
+            if (method_exists($controller, 'addJs')) {
+                $controller->addJs('/plugins/latihan/latihan/assets/js/backend-watermark.js');
+            }
+        });
+    }
 }

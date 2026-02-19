@@ -4,5 +4,7 @@ list: $/latihan/latihan/models/teacher/columns.yaml
 showCheckboxes: true
 toolbar:
     buttons: list_toolbar
+        # keep default list_toolbar; clicking a row will open the edit form
+recordUrl: update/{:id}
 search:
     prompt: backend::lang.list.search_prompt
