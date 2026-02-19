@@ -1,0 +1,182 @@
+<div class="armuzz-watermark">
+  <div class="watermark-content">
+    <div class="watermark-header">
+      <span class="watermark-name">Arya Musthofa</span>
+      <span class="watermark-location">Asal Jateng</span>
+    </div>
+    <div class="watermark-company">Armuzz Dev</div>
+    <div class="watermark-subtitle">Software Engineering & AI Engineering</div>
+    <div class="watermark-social">
+      <span class="social-icon">📱</span>
+      <span class="social-handle">@galeri_armus</span>
+    </div>
+    <div class="watermark-copyright">©2026 Hak Cipta Dilindungi Pencipta</div>
+  </div>
+</div>
+
+<style>
+  .armuzz-watermark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .watermark-content {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--watermark-color, rgba(0, 0, 0, 0.08));
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    line-height: 1.4;
+    font-size: 13px;
+    user-select: none;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+  }
+
+  .watermark-name {
+    display: block;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .watermark-location {
+    display: block;
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 6px;
+  }
+
+  .watermark-company {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .watermark-subtitle {
+    display: block;
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .watermark-social {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .social-icon {
+    display: inline-block;
+  }
+
+  .social-handle {
+    font-weight: 500;
+  }
+
+  .watermark-copyright {
+    display: block;
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* Theme variations */
+  [data-theme="dark"] .watermark-content {
+    color: var(--watermark-color, rgba(255, 255, 255, 0.1));
+  }
+
+  [data-theme="light"] .watermark-content {
+    color: var(--watermark-color, rgba(0, 0, 0, 0.08));
+  }
+
+  [data-theme="minimalist"] .watermark-content {
+    color: var(--watermark-color, rgba(0, 0, 0, 0.05));
+  }
+
+  [data-theme="mono"] .watermark-content {
+    color: var(--watermark-color, rgba(50, 50, 50, 0.1));
+  }
+
+  [data-theme="glass"] .watermark-content {
+    color: var(--watermark-color, rgba(255, 255, 255, 0.15));
+  }
+
+  [data-theme="cyberpunk"] .watermark-content {
+    color: var(--watermark-color, rgba(0, 255, 255, 0.1));
+  }
+
+  [data-theme="ocean"] .watermark-content {
+    color: var(--watermark-color, rgba(0, 119, 182, 0.12));
+  }
+
+  [data-theme="forest"] .watermark-content {
+    color: var(--watermark-color, rgba(34, 139, 34, 0.1));
+  }
+
+  [data-theme="sunset"] .watermark-content {
+    color: var(--watermark-color, rgba(255, 140, 0, 0.1));
+  }
+
+  [data-theme="vintage"] .watermark-content {
+    color: var(--watermark-color, rgba(160, 82, 45, 0.1));
+  }
+
+  [data-theme="nord"] .watermark-content {
+    color: var(--watermark-color, rgba(191, 202, 222, 0.15));
+  }
+
+  [data-theme="rgb"] .watermark-content {
+    color: var(--watermark-color, rgba(75, 0, 130, 0.1));
+  }
+
+  [data-theme="demo"] .watermark-content {
+    color: var(--watermark-color, rgba(0, 0, 0, 0.08));
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .watermark-content {
+      top: 12px;
+      left: 12px;
+      font-size: 11px;
+    }
+
+    .watermark-name {
+      font-size: 13px;
+    }
+
+    .watermark-company {
+      font-size: 12px;
+    }
+
+    .watermark-subtitle {
+      font-size: 11px;
+    }
+
+    .watermark-social {
+      font-size: 11px;
+    }
+
+    .watermark-copyright {
+      font-size: 10px;
+    }
+  }
+
+  /* Print style - hide watermark */
+  @media print {
+    .armuzz-watermark {
+      display: none;
+    }
+  }
+</style>
