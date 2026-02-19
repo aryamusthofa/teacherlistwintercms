@@ -9,6 +9,7 @@ class Teacher extends Model
     protected $fillable = [
         'name',
         'subject',
-        'is_active'
+        'is_active',
+        'is_verified'
     ];
 }
