@@ -18,6 +18,7 @@ class Plugin extends PluginBase
     {
         return [
             \Latihan\Latihan\Components\TeacherList::class => 'teacherList',
+            \Latihan\Latihan\Components\StudentList::class => 'studentList',
         ];
     }
 

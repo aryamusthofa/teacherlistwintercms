@@ -10,19 +10,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Theme System -->
-    <link rel="stylesheet" href="{{ 'assets/css/themes.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/css/themes.css'|theme }}?v=2.5">
 
     {% styles %}
 
+    <style>
+      .preload-transitions * {
+        transition: none !important;
+      }
+    </style>
     <!-- Prevent FOUC: apply saved theme before render -->
     <script>
       (function() {
         var t = localStorage.getItem('armuzz-theme') || 'default';
         document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.classList.add('preload-transitions');
       })();
     </script>
 </head>
-<body data-theme="default">
+<body>
+  <script>
+    document.body.setAttribute('data-theme', localStorage.getItem('armuzz-theme') || 'default');
+  </script>
 
   {% partial 'watermark' %}
 
@@ -31,28 +40,7 @@
 
     <div class="main-area">
       <!-- Topbar -->
-      <header class="topbar">
-        <div class="d-flex align-items-center gap-3">
-          <button class="btn btn-sm btn-outline-secondary mobile-sidebar-toggle d-lg-none" onclick="openMobileSidebar()">
-            <i class="bi bi-list fs-5"></i>
-          </button>
-          <span class="topbar-title" data-i18n="{% if this.page.id == 'welcome' %}home{% elseif this.page.id == 'dashboard' %}dashboard{% elseif this.page.id == 'teachers' %}teachers_title{% elseif this.page.id == 'teachers_create' %}add_teacher{% elseif this.page.id == 'teachers_edit' %}edit_teacher{% endif %}">{{ this.page.title }}</span>
-        </div>
-        <div class="topbar-actions">
-          <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('langPicker').classList.add('open')" title="Change Language">
-            <i class="bi bi-translate me-1"></i>
-            <span class="d-none d-md-inline" data-i18n="language">Language</span>
-          </button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('tzPicker').classList.add('open')" title="Change Timezone">
-            <i class="bi bi-clock me-1"></i>
-            <span class="d-none d-md-inline" id="tzLabel">UTC+7</span>
-          </button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('themePicker').classList.add('open')" title="Change Theme">
-            <i class="bi bi-palette me-1"></i>
-            <span class="d-none d-md-inline" data-i18n="theme">Theme</span>
-          </button>
-        </div>
-      </header>
+      {% partial 'topbar' %}
 
       <!-- Main Content -->
       <main class="main-content">
@@ -65,152 +53,27 @@
     </div>
   </div>
 
-  <!-- Theme Picker Modal -->
+  <!-- Modals -->
   {% partial 'theme-switcher' %}
-
-  <!-- Language Picker Modal -->
   {% partial 'lang-switcher' %}
-
-  <!-- Timezone Picker Modal -->
   {% partial 'tz-switcher' %}
 
-  <!-- Language System (must load before DOMContentLoaded) -->
-  <script src="{{ 'assets/js/lang.js'|theme }}"></script>
+  <!-- Core Scripts -->
+  <script src="{{ 'assets/js/lang.js'|theme }}?v=2.5"></script>
+  <script>
+    // Apply lang immediately to prevent text glitch (FOUC)
+    if (typeof applyLang === 'function') {
+      applyLang(localStorage.getItem('armuzz-lang') || 'en');
+    }
+  </script>
 
-  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <!-- Winter CMS Framework -->
+  
   {% framework extras %}
   {% scripts %}
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ 'assets/js/app.js'|theme }}?v=2.5"></script>
 
-  <!-- Theme & Sidebar & Language & Timezone JS -->
-  <script>
-    // ── Theme Switcher ──
-    function applyTheme(name) {
-      document.body.setAttribute('data-theme', name);
-      document.documentElement.setAttribute('data-theme', name);
-      localStorage.setItem('armuzz-theme', name);
-
-      document.querySelectorAll('.theme-swatch').forEach(function(el) {
-        if (!el.classList.contains('lang-option') && !el.classList.contains('tz-option')) {
-          el.classList.toggle('active', el.dataset.theme === name);
-        }
-      });
-    }
-
-    // ── Sidebar Collapse ──
-    function toggleSidebar() {
-      var sidebar = document.getElementById('appSidebar');
-      var icon = document.getElementById('sidebarToggleIcon');
-      sidebar.classList.toggle('collapsed');
-
-      if (sidebar.classList.contains('collapsed')) {
-        icon.classList.remove('bi-chevron-bar-left');
-        icon.classList.add('bi-chevron-bar-right');
-        localStorage.setItem('armuzz-sidebar', 'collapsed');
-      } else {
-        icon.classList.remove('bi-chevron-bar-right');
-        icon.classList.add('bi-chevron-bar-left');
-        localStorage.setItem('armuzz-sidebar', 'expanded');
-      }
-    }
-
-    // ── Mobile Sidebar ──
-    function openMobileSidebar() {
-      document.getElementById('appSidebar').classList.add('mobile-open');
-      document.getElementById('mobileOverlay').classList.add('show');
-    }
-
-    function closeMobileSidebar() {
-      document.getElementById('appSidebar').classList.remove('mobile-open');
-      document.getElementById('mobileOverlay').classList.remove('show');
-    }
-
-    // ── Timezone Conversion ──
-    // Server timezone is Asia/Jakarta (UTC+7).
-    // We convert displayed timestamps from server TZ to user-selected TZ.
-    var SERVER_OFFSET = 7; // server = UTC+7
-
-    function applyTimezone(offset) {
-      localStorage.setItem('armuzz-tz', offset);
-      var userOffset = parseFloat(offset);
-
-      // Update topbar label
-      var lbl = document.getElementById('tzLabel');
-      if (lbl) {
-        var sign = userOffset >= 0 ? '+' : '';
-        var display = Number.isInteger(userOffset) ? userOffset.toString() : userOffset.toString();
-        lbl.textContent = 'UTC' + sign + display;
-      }
-
-      // Update active indicator in picker
-      document.querySelectorAll('.tz-option').forEach(function(el) {
-        el.classList.toggle('active', el.dataset.tz === offset);
-      });
-
-      // Convert all .tz-date elements
-      document.querySelectorAll('.tz-date').forEach(function(el) {
-        var raw = el.getAttribute('data-utc');
-        if (!raw || raw === '') { el.textContent = '-'; return; }
-
-        // Parse the server timestamp (YYYY-MM-DD HH:MM:SS in server TZ)
-        var parts = raw.replace(/[-:\/]/g, ' ').split(' ').map(Number);
-        if (parts.length < 5) { return; }
-        // Create date as UTC by subtracting server offset
-        var d = new Date(Date.UTC(parts[0], parts[1]-1, parts[2], parts[3]-SERVER_OFFSET, parts[4], parts[5]||0));
-
-        // Apply user offset
-        var utcMs = d.getTime();
-        var userMs = utcMs + (userOffset * 3600000);
-        var userDate = new Date(userMs);
-
-        // Format as dd/mm/yyyy HH:mm
-        var dd = String(userDate.getUTCDate()).padStart(2,'0');
-        var mm = String(userDate.getUTCMonth()+1).padStart(2,'0');
-        var yyyy = userDate.getUTCFullYear();
-        var hh = String(userDate.getUTCHours()).padStart(2,'0');
-        var mi = String(userDate.getUTCMinutes()).padStart(2,'0');
-        el.textContent = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mi;
-      });
-    }
-
-    // ── Initialize on Load ──
-    document.addEventListener('DOMContentLoaded', function() {
-      // Restore theme
-      var savedTheme = localStorage.getItem('armuzz-theme') || 'default';
-      applyTheme(savedTheme);
-
-      // Restore sidebar state
-      var sidebarState = localStorage.getItem('armuzz-sidebar');
-      if (sidebarState === 'collapsed' && window.innerWidth >= 992) {
-        document.getElementById('appSidebar').classList.add('collapsed');
-        var icon = document.getElementById('sidebarToggleIcon');
-        icon.classList.remove('bi-chevron-bar-left');
-        icon.classList.add('bi-chevron-bar-right');
-      }
-
-      // Apply saved language
-      var savedLang = getSavedLang();
-      applyLang(savedLang);
-
-      // Apply saved timezone (default: UTC+7 Jakarta)
-      var savedTz = localStorage.getItem('armuzz-tz') || '+7';
-      applyTimezone(savedTz);
-
-      // Close modals with Escape
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          document.getElementById('themePicker').classList.remove('open');
-          document.getElementById('langPicker').classList.remove('open');
-          document.getElementById('tzPicker').classList.remove('open');
-          closeMobileSidebar();
-        }
-      });
-    });
-  </script>
 </body>
 </html>

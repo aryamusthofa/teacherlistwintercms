@@ -48,7 +48,8 @@
                   data-request="onToggleActive"
                   data-request-data="id: '{{ t.id }}'"
                   data-request-confirm="Ubah status teacher ini?"
-                  data-request-success="window.location.reload()"
+                  data-request-update="'teachers/table': '#teachersTable'"
+                  data-request-flash
                 >
                   {% if t.is_active %}
                     <i class="bi bi-slash-circle me-1"></i> <span data-i18n="btn_deactivate">Deactivate</span>
@@ -62,7 +63,8 @@
                   data-request="onDelete"
                   data-request-data="id: '{{ t.id }}'"
                   data-request-confirm="Hapus teacher ini?"
-                  data-request-success="window.location.reload()"
+                  data-request-update="'teachers/table': '#teachersTable'"
+                  data-request-flash
                 >
                   <i class="bi bi-trash me-1"></i> <span data-i18n="btn_delete">Delete</span>
                 </button>

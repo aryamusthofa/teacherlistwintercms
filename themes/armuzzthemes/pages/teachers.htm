@@ -82,6 +82,7 @@ function onDelete()
 
     Db::table('latihan_teachers')->where('id', $id)->delete();
     Flash::success('{{flash_teacher_deleted}}');
+    $this->loadTeachers();
 }
 
 function onToggleActive()
@@ -109,6 +110,7 @@ function onToggleActive()
     ]);
 
     Flash::success('{{flash_status_changed}}');
+    $this->loadTeachers();
 }
 ?>
 ==

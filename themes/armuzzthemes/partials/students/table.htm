@@ -1,0 +1,84 @@
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th data-i18n="col_name">Name</th>
+            <th data-i18n="col_subject">Subject</th>
+            <th data-i18n="col_created">Created At</th>
+            <th data-i18n="col_updated">Updated At</th>
+            <th data-i18n="col_status">Status</th>
+            <th class="text-end" data-i18n="col_action">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if students|length == 0 %}
+            <tr>
+              <td colspan="6" class="text-center text-muted py-4" data-i18n="no_data">
+                Tidak ada data.
+              </td>
+            </tr>
+          {% endif %}
+
+          {% for s in students %}
+            <tr>
+              <td class="fw-semibold">{{ s.name }}</td>
+              <td class="text-muted">{{ s.subject }}</td>
+              <td class="text-muted tz-date" style="font-size:0.85rem; white-space:nowrap" data-utc="{{ s.created_at }}">
+                {{ s.created_at ? s.created_at|date("d/m/Y H:i") : '-' }}
+              </td>
+              <td class="text-muted tz-date" style="font-size:0.85rem; white-space:nowrap" data-utc="{{ s.updated_at }}">
+                {{ s.updated_at ? s.updated_at|date("d/m/Y H:i") : '-' }}
+              </td>
+              <td>
+                {% if s.is_active %}
+                  <span class="badge text-bg-success" data-i18n="active">Active</span>
+                {% else %}
+                  <span class="badge text-bg-secondary" data-i18n="inactive">Inactive</span>
+                {% endif %}
+              </td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ 'students_edit'|page({ id: s.id }) }}">
+                  <i class="bi bi-pencil-square me-1"></i> <span data-i18n="btn_edit">Edit</span>
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  data-request="onToggleActive"
+                  data-request-data="id: '{{ s.id }}'"
+                  data-request-confirm="Ubah status student ini?"
+                  data-request-update="'students/table': '#studentsTable'"
+                  data-request-flash
+                >
+                  {% if s.is_active %}
+                    <i class="bi bi-slash-circle me-1"></i> <span data-i18n="btn_deactivate">Deactivate</span>
+                  {% else %}
+                    <i class="bi bi-check-circle me-1"></i> <span data-i18n="btn_activate">Activate</span>
+                  {% endif %}
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-request="onDelete"
+                  data-request-data="id: '{{ s.id }}'"
+                  data-request-confirm="Hapus student ini?"
+                  data-request-update="'students/table': '#studentsTable'"
+                  data-request-flash
+                >
+                  <i class="bi bi-trash me-1"></i> <span data-i18n="btn_delete">Delete</span>
+                </button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer bg-white d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+    <small class="text-muted">
+      <span data-i18n="total">Total</span>: {{ pager.total }}
+    </small>
+    {% partial "pagination" pager=pager filters=filters %}
+  </div>
+</div>

@@ -16,6 +16,9 @@
         <li class="nav-item">
           <a class="nav-link {% if this.page.id == 'dashboard' %}active fw-semibold{% endif %}" href="{{ 'dashboard'|page }}">Dashboard</a>
         </li>
+        <li class="nav-item {{ this.page.id == 'data-guru' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ 'data-guru'|page }}">Data Guru</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link {% if this.page.id starts with 'teachers' %}active fw-semibold{% endif %}" href="{{ 'teachers'|page }}">Teachers</a>
         </li>

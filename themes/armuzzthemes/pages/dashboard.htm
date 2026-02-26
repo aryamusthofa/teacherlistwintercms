@@ -9,43 +9,49 @@ use Illuminate\Support\Facades\Schema;
 function onStart()
 {
     $this['teachersReady'] = Schema::hasTable('latihan_teachers');
+    $this['studentsReady'] = Schema::hasTable('latihan_students');
 
-    if (!$this['teachersReady']) {
+    $this['teacherStats'] = ['total' => 0, 'active' => 0, 'inactive' => 0];
+    $this['studentStats'] = ['total' => 0, 'active' => 0, 'inactive' => 0];
+    $this['recentTeachers'] = [];
+    $this['subjectData'] = [];
+    $this['timelineData'] = [];
+
+    if ($this['teachersReady']) {
+        $totalT = Db::table('latihan_teachers')->count();
+        $activeT = Db::table('latihan_teachers')->where('is_active', 1)->count();
         $this['teacherStats'] = [
-            'total' => 0,
-            'active' => 0,
-            'inactive' => 0,
+            'total' => $totalT,
+            'active' => $activeT,
+            'inactive' => max(0, $totalT - $activeT),
         ];
-        $this['recentTeachers'] = [];
-        $this['subjectData'] = [];
-        $this['timelineData'] = [];
-        return;
+
+        $this['recentTeachers'] = Db::table('latihan_teachers')->orderByDesc('id')->limit(5)->get();
+
+        $this['subjectData'] = Db::table('latihan_teachers')
+            ->select(Db::raw('subject, COUNT(*) as cnt'))
+            ->groupBy('subject')
+            ->orderByDesc('cnt')
+            ->limit(8)
+            ->get();
+
+        $this['timelineData'] = Db::table('latihan_teachers')
+            ->select(Db::raw("DATE(created_at) as day, COUNT(*) as cnt"))
+            ->where('created_at', '>=', date('Y-m-d', strtotime('-6 days')))
+            ->groupBy('day')
+            ->orderBy('day')
+            ->get();
     }
 
-    $total = Db::table('latihan_teachers')->count();
-    $active = Db::table('latihan_teachers')->where('is_active', 1)->count();
-    $inactive = max(0, $total - $active);
-
-    $this['teacherStats'] = compact('total', 'active', 'inactive');
-    $this['recentTeachers'] = Db::table('latihan_teachers')->orderByDesc('id')->limit(5)->get();
-
-    // Data for Subject Distribution chart (pie/doughnut)
-    $subjects = Db::table('latihan_teachers')
-        ->select(Db::raw('subject, COUNT(*) as cnt'))
-        ->groupBy('subject')
-        ->orderByDesc('cnt')
-        ->limit(8)
-        ->get();
-    $this['subjectData'] = $subjects;
-
-    // Data for Timeline chart (teachers created per day, last 7 days)
-    $timeline = Db::table('latihan_teachers')
-        ->select(Db::raw("DATE(created_at) as day, COUNT(*) as cnt"))
-        ->where('created_at', '>=', date('Y-m-d', strtotime('-6 days')))
-        ->groupBy('day')
-        ->orderBy('day')
-        ->get();
-    $this['timelineData'] = $timeline;
+    if ($this['studentsReady']) {
+        $totalS = Db::table('latihan_students')->count();
+        $activeS = Db::table('latihan_students')->where('is_active', 1)->count();
+        $this['studentStats'] = [
+            'total' => $totalS,
+            'active' => $activeS,
+            'inactive' => max(0, $totalS - $activeS),
+        ];
+    }
 }
 ?>
 ==
@@ -72,7 +78,7 @@ function onStart()
 
 <!-- ═══ Stat Cards ═══ -->
 <div class="row g-3 mb-4">
-  <div class="col-md-4">
+  <div class="col-md-3 col-sm-6">
     <div class="card shadow-sm stat-card stat-total">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
@@ -80,17 +86,17 @@ function onStart()
             <div class="stat-label" data-i18n="total_teachers">Total Teachers</div>
             <div class="stat-number">{{ teacherStats.total }}</div>
           </div>
-          <div class="stat-icon"><i class="bi bi-people"></i></div>
+          <div class="stat-icon"><i class="bi bi-person-workspace"></i></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3 col-sm-6">
     <div class="card shadow-sm stat-card stat-active">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <div class="stat-label" data-i18n="active">Active</div>
+            <div class="stat-label" data-i18n="active">Active Teachers</div>
             <div class="stat-number">{{ teacherStats.active }}</div>
           </div>
           <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
@@ -98,15 +104,28 @@ function onStart()
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="card shadow-sm stat-card stat-inactive">
+  <div class="col-md-3 col-sm-6">
+    <div class="card shadow-sm stat-card stat-inactive" style="border-left-color: var(--bs-info);">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <div class="stat-label" data-i18n="inactive">Inactive</div>
-            <div class="stat-number">{{ teacherStats.inactive }}</div>
+            <div class="stat-label" data-i18n="students">Total Students</div>
+            <div class="stat-number">{{ studentStats.total }}</div>
           </div>
-          <div class="stat-icon"><i class="bi bi-slash-circle"></i></div>
+          <div class="stat-icon"><i class="bi bi-person-lines-fill"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6">
+    <div class="card shadow-sm stat-card stat-active">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="stat-label" data-i18n="active">Active Students</div>
+            <div class="stat-number">{{ studentStats.active }}</div>
+          </div>
+          <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
         </div>
       </div>
     </div>
@@ -319,21 +338,33 @@ document.addEventListener('DOMContentLoaded', function() {
   new Chart(document.getElementById('statusChart'), {
     type: 'bar',
     data: {
-      labels: ['Active', 'Inactive'],
-      datasets: [{
-        data: [{{ teacherStats.active }}, {{ teacherStats.inactive }}],
-        backgroundColor: [success + 'cc', muted + '88'],
-        borderColor: [success, muted],
-        borderWidth: 2,
-        borderRadius: 8,
-        barThickness: 30,
-      }]
+      labels: ['Teachers', 'Students'],
+      datasets: [
+        {
+          label: 'Active',
+          data: [{{ teacherStats.active }}, {{ studentStats.active }}],
+          backgroundColor: success + 'cc',
+          borderColor: success,
+          borderWidth: 2,
+          borderRadius: 8,
+          barThickness: 20,
+        },
+        {
+          label: 'Inactive',
+          data: [{{ teacherStats.inactive }}, {{ studentStats.inactive }}],
+          backgroundColor: muted + '88',
+          borderColor: muted,
+          borderWidth: 2,
+          borderRadius: 8,
+          barThickness: 20,
+        }
+      ]
     },
     options: {
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: { legend: { position: 'bottom' } },
       scales: {
         x: {
           beginAtZero: true,

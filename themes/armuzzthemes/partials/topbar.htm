@@ -1,0 +1,22 @@
+      <header class="topbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-sm btn-outline-secondary mobile-sidebar-toggle d-lg-none" onclick="openMobileSidebar()">
+            <i class="bi bi-list fs-5"></i>
+          </button>
+          <span class="topbar-title" data-i18n="{% if this.page.id == 'welcome' %}home{% elseif this.page.id == 'dashboard' %}dashboard{% elseif this.page.id == 'teachers' %}teachers_title{% elseif this.page.id == 'teachers_create' %}add_teacher{% elseif this.page.id == 'teachers_edit' %}edit_teacher{% elseif this.page.id == 'students' %}students_title{% elseif this.page.id == 'students_create' %}add_student{% elseif this.page.id == 'students_edit' %}edit_student{% endif %}">{{ this.page.title }}</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('langPicker').classList.add('open')" title="Change Language">
+            <i class="bi bi-translate me-1"></i>
+            <span class="d-none d-md-inline" data-i18n="language">Language</span>
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('tzPicker').classList.add('open')" title="Change Timezone">
+            <i class="bi bi-clock me-1"></i>
+            <span class="d-none d-md-inline" id="tzLabel">UTC+7</span>
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('themePicker').classList.add('open')" title="Change Theme">
+            <i class="bi bi-palette me-1"></i>
+            <span class="d-none d-md-inline" data-i18n="theme">Theme</span>
+          </button>
+        </div>
+      </header>

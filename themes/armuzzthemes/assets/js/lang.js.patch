@@ -1,0 +1,32 @@
+--- lang.js
++++ lang.js
+@@ -37,6 +37,13 @@
+   add_teacher: { en: 'Add Teacher', id: 'Tambah Guru', ja: '教師を追加', zh: '添加教师', es: 'Añadir Profesor', pt: 'Adicionar Professor', ru: 'Добавить учителя', ar: 'إضافة معلم', hi: 'शिक्षक जोड़ें', tr: 'Öğretmen Ekle', ko: '교사 추가', fr: 'Ajouter Enseignant', de: 'Lehrer hinzufügen', it: 'Aggiungi Insegnante', th: 'เพิ่มครู', vi: 'Thêm Giáo viên', nl: 'Leraar toevoegen', pl: 'Dodaj nauczyciela', sv: 'Lägg till lärare', uk: 'Додати вчителя' },
++  student_mgmt: { en: 'Student Management', id: 'Manajemen Siswa' },
++  students: { en: 'Students', id: 'Siswa' },
++  add_student: { en: 'Add Student', id: 'Tambah Siswa' },
+   change_theme: { en: 'Change Theme', id: 'Ganti Tema', ja: 'テーマ変更', zh: '更换主题', es: 'Cambiar Tema', pt: 'Mudar Tema', ru: 'Сменить тему', ar: 'تغيير السمة', hi: 'थीम बदलें', tr: 'Tema Değiştir', ko: '테마 변경', fr: 'Changer le thème', de: 'Design ändern', it: 'Cambia Tema', th: 'เปลี่ยนธีม', vi: 'Đổi Giao diện', nl: 'Thema wijzigen', pl: 'Zmień motyw', sv: 'Byt tema', uk: 'Змінити тему' },
+@@ -48,6 +55,10 @@
+   teachers_desc: { en: 'Manage teacher data.', id: 'Kelola data guru.', ja: '教師データの管理。', zh: '管理教师数据。', es: 'Administrar datos de profesores.', pt: 'Gerenciar dados de professores.', ru: 'Управление данными учителей.', ar: 'إدارة بيانات المعلمين.', hi: 'शिक्षक डेटा प्रबंधित करें।', tr: 'Öğretmen verilerini yönetin.', ko: '교사 데이터를 관리합니다.', fr: 'Gérer les données des enseignants.', de: 'Lehrerdaten verwalten.', it: 'Gestisci dati insegnanti.', th: 'จัดการข้อมูลครู', vi: 'Quản lý dữ liệu giáo viên.', nl: 'Leraargegevens beheren.', pl: 'Zarządzaj danymi nauczycieli.', sv: 'Hantera lärardata.', uk: 'Управління даними вчителів.' },
++  students_title: { en: 'Students', id: 'Siswa' },
++  students_desc: { en: 'Manage student data.', id: 'Kelola data siswa.' },
+   search_placeholder: { en: 'Search name / subject', id: 'Cari nama / subject', ja: '名前/科目を検索', zh: '搜索姓名/科目', es: 'Buscar nombre / materia', pt: 'Buscar nome / disciplina', ru: 'Поиск по имени / предмету', ar: 'البحث بالاسم / المادة', hi: 'नाम / विषय खोजें', tr: 'İsim / ders ara', ko: '이름/과목 검색', fr: 'Chercher nom / matière', de: 'Name / Fach suchen', it: 'Cerca nome / materia', th: 'ค้นหาชื่อ/วิชา', vi: 'Tìm tên / môn', nl: 'Zoek naam / vak', pl: 'Szukaj nazwiska / przedmiotu', sv: 'Sök namn / ämne', uk: 'Пошук імені / предмета' },
+@@ -69,6 +80,10 @@
+   flash_teacher_deleted: { en: 'Teacher deleted successfully.', id: 'Guru berhasil dihapus.', ja: '教師が削除されました。', zh: '教师已成功删除。', es: 'Profesor eliminado exitosamente.', pt: 'Professor excluído com sucesso.', ru: 'Учитель успешно удалён.', ar: 'تم حذف المعلم بنجاح.', hi: 'शिक्षक सफलतापूर्वक हटाया गया।', tr: 'Öğretmen başarıyla silindi.', ko: '교사가 성공적으로 삭제되었습니다.', fr: 'Enseignant supprimé avec succès.', de: 'Lehrer erfolgreich gelöscht.', it: 'Insegnante eliminato con successo.', th: 'ลบครูสำเร็จ', vi: 'Giáo viên đã được xóa.', nl: 'Leraar succesvol verwijderd.', pl: 'Nauczyciel usunięty pomyślnie.', sv: 'Lärare raderad.', uk: 'Вчителя успішно видалено.' },
+   flash_status_changed: { en: 'Teacher status changed.', id: 'Status guru berhasil diubah.', ja: '教師のステータスが変更されました。', zh: '教师状态已更改。', es: 'Estado del profesor cambiado.', pt: 'Status do professor alterado.', ru: 'Статус учителя изменён.', ar: 'تم تغيير حالة المعلم.', hi: 'शिक्षक की स्थिति बदल दी गई।', tr: 'Öğretmen durumu değiştirildi.', ko: '교사 상태가 변경되었습니다.', fr: 'Statut de l\'enseignant modifié.', de: 'Lehrerstatus geändert.', it: 'Stato insegnante cambiato.', th: 'เปลี่ยนสถานะครูสำเร็จ', vi: 'Trạng thái giáo viên đã thay đổi.', nl: 'Status leraar gewijzigd.', pl: 'Status nauczyciela zmieniony.', sv: 'Lärarstatus ändrad.', uk: 'Статус вчителя змінено.' },
++  flash_student_saved: { en: 'Student saved successfully.', id: 'Siswa berhasil disimpan.' },
++  flash_student_created: { en: 'Student created successfully.', id: 'Siswa berhasil dibuat.' },
++  flash_student_deleted: { en: 'Student deleted successfully.', id: 'Siswa berhasil dihapus.' },
++  flash_student_status_changed: { en: 'Student status changed.', id: 'Status siswa berhasil diubah.' },
+ 
+   // ── Validation Messages ──
+@@ -82,6 +97,10 @@
+   edit_teacher_desc: { en: 'Update teacher data.', id: 'Perbarui data guru.', ja: '教師データを更新。', zh: '更新教师数据。', es: 'Actualizar datos del profesor.', pt: 'Atualizar dados do professor.', ru: 'Обновить данные учителя.', ar: 'تحديث بيانات المعلم.', hi: 'शिक्षक डेटा अपडेट करें।', tr: 'Öğretmen verilerini güncelle.', ko: '교사 데이터를 업데이트합니다.', fr: 'Mettre à jour les données.', de: 'Lehrerdaten aktualisieren.', it: 'Aggiorna dati insegnante.', th: 'อัปเดตข้อมูลครู', vi: 'Cập nhật dữ liệu giáo viên.', nl: 'Leraargegevens bijwerken.', pl: 'Zaktualizuj dane nauczyciela.', sv: 'Uppdatera lärardata.', uk: 'Оновити дані вчителя.' },
++  edit_student: { en: 'Edit Student', id: 'Edit Siswa' },
++  edit_student_desc: { en: 'Update student data.', id: 'Perbarui data siswa.' },
++  add_student_desc: { en: 'Add a new student.', id: 'Tambah data siswa baru.' },
+   add_teacher_desc: { en: 'Add a new teacher.', id: 'Tambah data guru baru.', ja: '新しい教師を追加。', zh: '添加新教师。', es: 'Añadir nuevo profesor.', pt: 'Adicionar novo professor.', ru: 'Добавить нового учителя.', ar: 'إضافة معلم جديد.', hi: 'नया शिक्षक जोड़ें।', tr: 'Yeni öğretmen ekle.', ko: '새 교사를 추가합니다.', fr: 'Ajouter un nouvel enseignant.', de: 'Neuen Lehrer hinzufügen.', it: 'Aggiungi nuovo insegnante.', th: 'เพิ่มครูใหม่', vi: 'Thêm giáo viên mới.', nl: 'Nieuwe leraar toevoegen.', pl: 'Dodaj nowego nauczyciela.', sv: 'Lägg till ny lärare.', uk: 'Додати нового вчителя.' },
+@@ -90,6 +109,7 @@
+   lbl_active: { en: 'Active', id: 'Aktif', ja: '有効', zh: '有效', es: 'Activo', pt: 'Ativo', ru: 'Активный', ar: 'نشط', hi: 'सक्रिय', tr: 'Aktif', ko: '활성', fr: 'Actif', de: 'Aktiv', it: 'Attivo', th: 'เปิดใช้', vi: 'Hoạt động', nl: 'Actief', pl: 'Aktywny', sv: 'Aktiv', uk: 'Активний' },
++  ph_student_name: { en: 'Student name', id: 'Nama siswa' },
+   ph_name: { en: 'Teacher name', id: 'Nama guru', ja: '教師名', zh: '教师姓名', es: 'Nombre del profesor', pt: 'Nome do professor', ru: 'Имя учителя', ar: 'اسم المعلم', hi: 'शिक्षक का नाम', tr: 'Öğretmen adı', ko: '교사 이름', fr: 'Nom de l\'enseignant', de: 'Lehrername', it: 'Nome insegnante', th: 'ชื่อครู', vi: 'Tên giáo viên', nl: 'Naam leraar', pl: 'Imię nauczyciela', sv: 'Lärarnamn', uk: 'Ім\'я вчителя' },

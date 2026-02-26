@@ -1,0 +1,162 @@
+title = "Students"
+url = "/students"
+layout = "default"
+is_hidden = 0
+==
+<?php
+use Illuminate\Support\Facades\Schema;
+
+function loadStudents()
+{
+    $this['studentsReady'] = Schema::hasTable('latihan_students');
+    $filters = [
+        'q' => trim((string) Input::get('q', '')),
+        'status' => (string) Input::get('status', 'all'),
+        'page' => max(1, (int) Input::get('page', 1)),
+    ];
+
+    if (!$this['studentsReady']) {
+        $this['students'] = [];
+        $this['pager'] = ['current' => 1, 'last' => 1, 'total' => 0, 'perPage' => 10];
+        $this['filters'] = $filters;
+        return;
+    }
+
+    $perPage = 10;
+    $baseQuery = Db::table('latihan_students');
+
+    if ($filters['q'] !== '') {
+        $q = $filters['q'];
+        $baseQuery->where(function ($query) use ($q) {
+            $query->where('name', 'like', "%{$q}%")
+                ->orWhere('subject', 'like', "%{$q}%");
+        });
+    }
+
+    if ($filters['status'] === 'active') {
+        $baseQuery->where('is_active', 1);
+    } elseif ($filters['status'] === 'inactive') {
+        $baseQuery->where('is_active', 0);
+    } else {
+        $filters['status'] = 'all';
+    }
+
+    $total = (clone $baseQuery)->count();
+    $last = max(1, (int) ceil($total / $perPage));
+    $page = min($filters['page'], $last);
+    $filters['page'] = $page;
+    $this['filters'] = $filters;
+
+    $items = (clone $baseQuery)
+        ->orderByDesc('id')
+        ->offset(($page - 1) * $perPage)
+        ->limit($perPage)
+        ->get();
+
+    $this['students'] = $items;
+    $this['pager'] = [
+        'current' => $page,
+        'last' => $last,
+        'total' => $total,
+        'perPage' => $perPage,
+    ];
+}
+
+function onStart()
+{
+    $this->loadStudents();
+}
+
+function onDelete()
+{
+    if (!Schema::hasTable('latihan_students')) {
+        Flash::error('Tabel latihan_students belum tersedia.');
+        return;
+    }
+
+    $id = (int) post('id');
+    if ($id <= 0) {
+        Flash::error('ID tidak valid.');
+        return;
+    }
+
+    Db::table('latihan_students')->where('id', $id)->delete();
+    Flash::success('{{flash_student_deleted}}');
+    $this->loadStudents();
+}
+
+function onToggleActive()
+{
+    if (!Schema::hasTable('latihan_students')) {
+        Flash::error('Tabel latihan_students belum tersedia.');
+        return;
+    }
+
+    $id = (int) post('id');
+    if ($id <= 0) {
+        Flash::error('ID tidak valid.');
+        return;
+    }
+
+    $student = Db::table('latihan_students')->where('id', $id)->first();
+    if (!$student) {
+        Flash::error('Student tidak ditemukan.');
+        return;
+    }
+
+    Db::table('latihan_students')->where('id', $id)->update([
+        'is_active' => $student->is_active ? 0 : 1,
+        'updated_at' => date('Y-m-d H:i:s'),
+    ]);
+
+    Flash::success('{{flash_student_status_changed}}');
+    $this->loadStudents();
+}
+?>
+==
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h3 class="fw-bold mb-1" data-i18n="students_title">Students</h3>
+    <p class="text-muted mb-0" data-i18n="students_desc">Kelola data students.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-primary" href="{{ 'students_create'|page }}">
+      <i class="bi bi-plus-lg me-1"></i> <span data-i18n="add_student">Add Student</span>
+    </a>
+  </div>
+</div>
+
+{% if not studentsReady %}
+  <div class="alert alert-warning">
+    Tabel <code>latihan_students</code> belum ada. Jalankan migration plugin <code>Latihan.Latihan</code> dulu.
+  </div>
+{% else %}
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <form class="row g-2 align-items-center" method="get" action="{{ 'students'|page }}">
+        <div class="col-12 col-md-6">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input class="form-control" name="q" value="{{ filters.q }}" placeholder="Cari nama / subject" data-i18n="search_placeholder">
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <select class="form-select" name="status">
+            <option value="all" {% if filters.status == 'all' %}selected{% endif %} data-i18n="all">All</option>
+            <option value="active" {% if filters.status == 'active' %}selected{% endif %} data-i18n="active">Active</option>
+            <option value="inactive" {% if filters.status == 'inactive' %}selected{% endif %} data-i18n="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-3 d-grid">
+          <button class="btn btn-outline-secondary" type="submit">
+            <span data-i18n="filter">Filter</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="studentsTable">
+    {% partial "students/table" %}
+  </div>
+{% endif %}

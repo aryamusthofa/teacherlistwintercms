@@ -12,36 +12,31 @@
 
   <tbody>
     {% for t in teachers %}
-      <tr>
-        <td>{{ t.name }}</td>
-        <td>{{ t.subject }}</td>
-        <td>
-          {% if t.is_active %}
-            <span class="badge bg-success">Active</span>
-          {% else %}
-            <span class="badge bg-secondary">Inactive</span>
-          {% endif %}
-        </td>
-        <td>
-          <button class="btn btn-sm btn-primary" disabled>Edit</button>
-          <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-request="{{ __SELF__ }}::onDelete"
-              data-request-data="id: {{ t.id }}"
-              data-request-confirm="Yakin ingin menghapus data guru: {{ t.name }}?"
-              data-request-success="$(this).closest('tr').remove()"
-          >
-              Delete
-          </button>
-        </td>
-      </tr>
+    <tr>
+      <td>{{ t.name }}</td>
+      <td>{{ t.subject }}</td>
+      <td>
+        {% if t.is_active %}
+        <span class="badge bg-success">Active</span>
+        {% else %}
+        <span class="badge bg-secondary">Inactive</span>
+        {% endif %}
+      </td>
+      <td>
+        <a class="btn btn-sm btn-primary" href="{{ 'teachers_edit'|page({ id: t.id }) }}">Edit</a>
+        <button type="button" class="btn btn-sm btn-danger" data-request="{{ __SELF__ }}::onDelete"
+          data-request-data="id: {{ t.id }}" data-request-confirm="Yakin ingin menghapus data guru: {{ t.name }}?"
+          data-request-success="$(this).closest('tr').remove()">
+          Delete
+        </button>
+      </td>
+    </tr>
     {% else %}
-      <tr>
-        <td colspan="4" class="text-center text-muted">
-          Belum ada data guru.
-        </td>
-      </tr>
+    <tr>
+      <td colspan="4" class="text-center text-muted">
+        Belum ada data guru.
+      </td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>

@@ -36,6 +36,22 @@
         </a>
       </li>
     </ul>
+
+    <div class="nav-label" data-i18n="student_mgmt">Student Management</div>
+    <ul style="padding:0;margin:0">
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'students' %}active{% endif %}" href="{{ 'students'|page }}">
+          <i class="bi bi-person-lines-fill nav-icon"></i>
+          <span class="nav-text" data-i18n="students">Students</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'students_create' %}active{% endif %}" href="{{ 'students_create'|page }}">
+          <i class="bi bi-person-plus nav-icon"></i>
+          <span class="nav-text" data-i18n="add_student">Add Student</span>
+        </a>
+      </li>
+    </ul>
   </nav>
 
   <div class="sidebar-theme-section">
