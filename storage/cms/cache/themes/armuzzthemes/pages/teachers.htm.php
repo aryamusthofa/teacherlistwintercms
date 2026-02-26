@@ -1,25 +1,25 @@
 <?php 
 use Illuminate\Support\Facades\Schema;
-class Cms69a0146202a1e345520988_3fcef67480760455ec7bebddd86436ceClass extends Cms\Classes\PageCode
+class Cms69a0154a47f47575051018_f205b3f7b85edf5e2db056056a312a4bClass extends Cms\Classes\PageCode
 {
-public function loadStudents()
+public function loadTeachers()
 {
-    $this['studentsReady'] = Schema::hasTable('latihan_students');
+    $this['teachersReady'] = Schema::hasTable('latihan_teachers');
     $filters = [
         'q' => trim((string) Input::get('q', '')),
         'status' => (string) Input::get('status', 'all'),
         'page' => max(1, (int) Input::get('page', 1)),
     ];
 
-    if (!$this['studentsReady']) {
-        $this['students'] = [];
+    if (!$this['teachersReady']) {
+        $this['teachers'] = [];
         $this['pager'] = ['current' => 1, 'last' => 1, 'total' => 0, 'perPage' => 10];
         $this['filters'] = $filters;
         return;
     }
 
     $perPage = 10;
-    $baseQuery = Db::table('latihan_students');
+    $baseQuery = Db::table('latihan_teachers');
 
     if ($filters['q'] !== '') {
         $q = $filters['q'];
@@ -49,7 +49,7 @@ public function loadStudents()
         ->limit($perPage)
         ->get();
 
-    $this['students'] = $items;
+    $this['teachers'] = $items;
     $this['pager'] = [
         'current' => $page,
         'last' => $last,
@@ -59,12 +59,12 @@ public function loadStudents()
 }
 public function onStart()
 {
-    $this->loadStudents();
+    $this->loadTeachers();
 }
 public function onDelete()
 {
-    if (!Schema::hasTable('latihan_students')) {
-        Flash::error('Tabel latihan_students belum tersedia.');
+    if (!Schema::hasTable('latihan_teachers')) {
+        Flash::error('Tabel latihan_teachers belum tersedia.');
         return;
     }
 
@@ -74,14 +74,14 @@ public function onDelete()
         return;
     }
 
-    Db::table('latihan_students')->where('id', $id)->delete();
-    Flash::success('{{flash_student_deleted}}');
-    $this->loadStudents();
+    Db::table('latihan_teachers')->where('id', $id)->delete();
+    Flash::success('{{flash_teacher_deleted}}');
+    $this->loadTeachers();
 }
 public function onToggleActive()
 {
-    if (!Schema::hasTable('latihan_students')) {
-        Flash::error('Tabel latihan_students belum tersedia.');
+    if (!Schema::hasTable('latihan_teachers')) {
+        Flash::error('Tabel latihan_teachers belum tersedia.');
         return;
     }
 
@@ -91,18 +91,18 @@ public function onToggleActive()
         return;
     }
 
-    $student = Db::table('latihan_students')->where('id', $id)->first();
-    if (!$student) {
-        Flash::error('Student tidak ditemukan.');
+    $teacher = Db::table('latihan_teachers')->where('id', $id)->first();
+    if (!$teacher) {
+        Flash::error('Teacher tidak ditemukan.');
         return;
     }
 
-    Db::table('latihan_students')->where('id', $id)->update([
-        'is_active' => $student->is_active ? 0 : 1,
+    Db::table('latihan_teachers')->where('id', $id)->update([
+        'is_active' => $teacher->is_active ? 0 : 1,
         'updated_at' => date('Y-m-d H:i:s'),
     ]);
 
-    Flash::success('{{flash_student_status_changed}}');
-    $this->loadStudents();
+    Flash::success('{{flash_status_changed}}');
+    $this->loadTeachers();
 }
 }
