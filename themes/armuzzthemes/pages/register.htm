@@ -1,0 +1,78 @@
+title = "Register"
+url = "/register"
+layout = "public"
+is_hidden = 0
+
+[account]
+redirect = "dashboard"
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+==
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-body p-4 p-md-5">
+                {% if not user %}
+                    <h3 class="fw-semibold mb-4 text-center">Register</h3>
+                    <form data-request="onRegister" data-request-validate data-request-flash>
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label text-secondary small text-uppercase fw-bold">Full Name</label>
+                            <input
+                                name="name"
+                                type="text"
+                                class="form-control"
+                                id="registerName"
+                                placeholder="Your name"
+                                required
+                            />
+                            <div class="text-danger" data-validate-for="name"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label text-secondary small text-uppercase fw-bold">Email</label>
+                            <input
+                                name="email"
+                                type="email"
+                                class="form-control"
+                                id="registerEmail"
+                                placeholder="hello@example.com"
+                                required
+                            />
+                            <div class="text-danger" data-validate-for="email"></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="registerPassword" class="form-label text-secondary small text-uppercase fw-bold">Password</label>
+                            <input
+                                name="password"
+                                type="password"
+                                class="form-control"
+                                id="registerPassword"
+                                placeholder="••••••••"
+                                required
+                            />
+                            <div class="text-danger" data-validate-for="password"></div>
+                        </div>
+
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-primary w-100 fw-medium py-2">Create Account</button>
+                        </div>
+                        
+                        <div class="text-center">
+                            <span class="text-muted">Already have an account?</span> 
+                            <a href="{{ 'login'|page }}" class="text-decoration-none fw-semibold">Login Now</a>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="bi bi-check-circle text-success" style="font-size: 3rem;"></i>
+                        <h4 class="fw-bold mt-3 mb-2">Already Logged In</h4>
+                        <p class="text-muted mb-4">Hello {{ user.name }}, you are already connected.</p>
+                        <a href="{{ 'dashboard'|page }}" class="btn btn-primary px-4">Go to Dashboard</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
