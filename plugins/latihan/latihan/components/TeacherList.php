@@ -15,7 +15,36 @@ class TeacherList extends ComponentBase
 
     public function onRun()
     {
-        $this->page['teachers'] = Teacher::orderBy('name', 'asc')->get();
+        $search = trim((string) get('search'));
+        $status = get('status');
+        $perPage = 5;
+
+        $query = Teacher::orderBy('name', 'asc');
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('subject', 'like', "%{$search}%");
+            });
+        }
+
+        if ($status !== null && $status !== '') {
+            if ($status === 'active') {
+                $query->where('is_active', 1);
+            } elseif ($status === 'inactive') {
+                $query->where('is_active', 0);
+            }
+        }
+
+        $teachers = $query->paginate($perPage);
+        $teachers->appends([
+            'search' => $search,
+            'status' => $status,
+        ]);
+
+        $this->page['teachers'] = $teachers;
+        $this->page['search'] = $search;
+        $this->page['status'] = $status;
     }
 
     public function onDelete()

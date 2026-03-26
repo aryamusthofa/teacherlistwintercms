@@ -1,19 +1,17 @@
+name: Teacher Management
+form: $/latihan/latihan/models/teacher/fields.yaml
 modelClass: Latihan\Latihan\Models\Teacher
-form:
-  fields:
-    name:
-      label: Name
-      type: text
-      span: auto
-    subject:
-      label: Subject
-      type: text
-      span: auto
-    is_active:
-      label: Active
-      type: switch
-      default: 1
-    is_verified:
-      label: Verified
-      type: switch
-      default: 0
+defaultRedirect: latihan/latihan/teachers
+
+create:
+    title: Create New Teacher
+    redirect: latihan/latihan/teachers/update/:id
+    redirectClose: latihan/latihan/teachers
+
+update:
+    title: "Edit Teacher — :name"
+    redirect: latihan/latihan/teachers/update/:id
+    redirectClose: latihan/latihan/teachers
+
+preview:
+    title: Preview Teacher

@@ -1,5 +1,26 @@
 <h2 class="mb-4"> Dashboard Guru </h2>
 
+<form method="get" class="mb-4">
+  <div class="row align-items-end">
+    <div class="col-md-5">
+      <label for="search" class="form-label">Search</label>
+      <input type="text" id="search" name="search" class="form-control" placeholder="Cari nama atau Subject guru" value="{{ search }}">
+    </div>
+    <div class="col-md-4">
+      <label for="status" class="form-label">Filter Status</label>
+      <select id="status" name="status" class="form-select">
+        <option value="">Semua Status</option>
+        <option value="active" {% if status == 'active' %}selected{% endif %}>Aktif</option>
+        <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>Tidak Aktif</option>
+      </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end gap-2">
+      <button type="submit" class="btn btn-primary w-100">Terapkan</button>
+      <a href="{{ 'teachers'|page }}" class="btn btn-secondary w-100">reset</a>
+    </div>
+  </div>
+</form>
+
 <table class="table table-bordered table-striped">
   <thead class="table-dark">
     <tr>
@@ -13,9 +34,9 @@
   <tbody>
     {% for t in teachers %}
     <tr>
-      <td>{{ t.name }}</td>
-      <td>{{ t.subject }}</td>
-      <td>
+      <td class="align-middle">{{ t.name }}</td>
+      <td class="align-middle">{{ t.subject }}</td>
+      <td class="align-middle">
         {% if t.is_active %}
         <span class="badge bg-success">Active</span>
         {% else %}
@@ -40,3 +61,13 @@
     {% endfor %}
   </tbody>
 </table>
+
+{% if teachers.lastPage > 1 %}
+<div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+  <div>
+    <small class="text-muted">
+      Halaman {{ teachers.currentPage }} dari {{ teachers.lastPage }}
+    </small>
+  </div>
+</div>
+{% endif %}

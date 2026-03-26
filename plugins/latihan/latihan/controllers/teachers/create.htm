@@ -1,19 +1,48 @@
-<?php
-    $this->addCss('/modules/backend/formwidgets/richeditor/assets/css/richeditor.css');
-?>
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('latihan/latihan/teachers') ?>">Teachers</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
 
-<div class="form-container">
-    <form onsubmit="return oc.handleForm(event, {
-        redirect: '<?= Backend::url('latihan/latihan/teachers') ?>'
-    })">
-        <?= $this->formRender() ?>
-        <div class="form-buttons" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
-            <button type="submit" class="btn btn-primary">
-                <i class="icon-save"></i> Simpan
-            </button>
-            <a href="<?= Backend::url('latihan/latihan/teachers') ?>" class="btn btn-secondary">
-                <i class="icon-times"></i> Batal
-            </a>
+<?php if (!$this->fatalError): ?>
+
+    <?= Form::open(['class' => 'layout']) ?>
+
+        <div class="layout-row">
+            <?= $this->formRender() ?>
         </div>
-    </form>
-</div>
+
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button
+                    type="submit"
+                    data-request="onSave"
+                    data-hotkey="ctrl+s, cmd+s"
+                    data-load-indicator="Creating Teacher..."
+                    class="btn btn-primary">
+                    Create
+                </button>
+                <button
+                    type="button"
+                    data-request="onSave"
+                    data-request-data="close:1"
+                    data-hotkey="ctrl+enter, cmd+enter"
+                    data-load-indicator="Creating Teacher..."
+                    class="btn btn-default">
+                    Create and Close
+                </button>
+                <span class="btn-text">
+                    or <a href="<?= Backend::url('latihan/latihan/teachers') ?>">Cancel</a>
+                </span>
+            </div>
+        </div>
+
+    <?= Form::close() ?>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('latihan/latihan/teachers') ?>" class="btn btn-default">Return to teachers list</a></p>
+
+<?php endif ?>

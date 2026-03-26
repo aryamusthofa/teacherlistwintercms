@@ -1,39 +1,83 @@
-<div class="button-strip">
-    <a class="btn btn-primary" href="<?= Backend::url('latihan/latihan/teachers/create') ?>" data-request="onCreate">
-        <i class="icon-plus"></i> New Teachers List
-    </a>
-    
-    <button class="btn btn-secondary" data-request="onDelete" data-request-confirm="Hapus data yang dipilih?">
-        <i class="icon-trash"></i> Delete selected
-    </button>
-    
-    <button class="btn btn-secondary" id="edit-selected-btn" onclick="editSelected()">
-        <i class="icon-edit"></i> Edit Selected
-    </button>
-</div>
+<a
+    href="<?= Backend::url('latihan/latihan/teachers/create') ?>"
+    class="btn btn-primary oc-icon-plus">
+    New Teacher
+</a>
+
+<button
+    type="button"
+    class="btn btn-default oc-icon-trash-o toolbar-bulk-action"
+    disabled
+    id="btnDeleteSelected">
+    Delete Selected
+</button>
+
+<button
+    type="button"
+    class="btn btn-default oc-icon-pencil toolbar-bulk-action"
+    disabled
+    id="btnEditSelected">
+    Edit Selected
+</button>
 
 <script>
-function editSelected(){
-    var form = document.querySelector('form[data-request]');
-    if (!form) {
-        alert('Form tidak ditemukan');
-        return;
+jQuery(function($) {
+    var updateUrl = '<?= Backend::url("latihan/latihan/teachers/update") ?>';
+
+    function getListWidget() {
+        return $('[data-control="listwidget"]');
     }
-    
-    var checked = form.querySelectorAll('input[type="checkbox"]:checked');
-    var ids = [];
-    
-    checked.forEach(function(ch){
-        // Cari value dari checkbox
-        var val = ch.value || ch.getAttribute('data-id');
-        if (val) ids.push(val);
+
+    function getCheckedIds() {
+        var $list = getListWidget();
+        if ($list.length && $list.data('oc.listwidget')) {
+            return $list.listWidget('getChecked');
+        }
+        // Fallback: manual query
+        var ids = [];
+        $('.list-checkbox input[type="checkbox"]:checked', $list.find('tbody')).each(function() {
+            var val = $(this).val();
+            if (val && val !== 'on') ids.push(val);
+        });
+        return ids;
+    }
+
+    function toggleBulkButtons() {
+        var ids = getCheckedIds();
+        var hasSelection = ids.length > 0;
+        $('.toolbar-bulk-action').prop('disabled', !hasSelection);
+    }
+
+    // Listen for checkbox changes in the list
+    $(document).on('change', '.list-checkbox input[type="checkbox"]', function() {
+        // Small delay to let the list widget update its state
+        setTimeout(toggleBulkButtons, 50);
     });
-    
-    if (ids.length === 0) {
-        alert('Pilih minimal satu record untuk diedit.');
-        return;
-    }
-    
-    window.location.href = '<?= Backend::url('latihan/latihan/teachers/update') ?>/' + ids[0];
-}
+
+    // Delete Selected
+    $('#btnDeleteSelected').on('click', function() {
+        var ids = getCheckedIds();
+        if (!ids.length) return;
+
+        if (!confirm('Hapus ' + ids.length + ' data guru yang dipilih?')) return;
+
+        $(this).request('onDelete', {
+            data: { checked: ids },
+            success: function(data) {
+                this.success(data);
+                toggleBulkButtons();
+            }
+        });
+    });
+
+    // Edit Selected
+    $('#btnEditSelected').on('click', function() {
+        var ids = getCheckedIds();
+        if (!ids.length) return;
+        window.location = updateUrl + '/' + ids[0];
+    });
+
+    // Initial state
+    toggleBulkButtons();
+});
 </script>

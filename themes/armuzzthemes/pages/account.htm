@@ -1,0 +1,107 @@
+title = "My Account"
+url = "/account"
+layout = "default"
+is_hidden = 0
+
+[account]
+redirect = "account"
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+==
+<div class="row pt-2">
+    <div class="col-md-8 col-lg-6 mx-auto">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-transparent border-bottom px-4 py-3 d-flex align-items-center">
+                <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
+                <h5 class="mb-0 fw-bold">My Profile</h5>
+            </div>
+            <div class="card-body p-4">
+                {% if not user %}
+                    <div class="alert alert-danger mb-0">
+                        You must be logged in to view this page.
+                    </div>
+                {% else %}
+                    <form data-request="onUpdate" data-request-validate data-request-flash>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="accountName" class="form-label text-secondary small text-uppercase fw-bold">First Name</label>
+                                <input
+                                    name="name"
+                                    type="text"
+                                    class="form-control"
+                                    id="accountName"
+                                    value="{{ user.name }}"
+                                    required
+                                >
+                                <div class="text-danger small mt-1" data-validate-for="name"></div>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <label for="accountSurname" class="form-label text-secondary small text-uppercase fw-bold">Last Name</label>
+                                <input
+                                    name="surname"
+                                    type="text"
+                                    class="form-control"
+                                    id="accountSurname"
+                                    value="{{ user.surname }}"
+                                >
+                                <div class="text-danger small mt-1" data-validate-for="surname"></div>
+                            </div>
+                            
+                            <div class="col-12 mt-3">
+                                <label for="accountEmail" class="form-label text-secondary small text-uppercase fw-bold">Email Address</label>
+                                <input
+                                    name="email"
+                                    type="email"
+                                    class="form-control"
+                                    id="accountEmail"
+                                    value="{{ user.email }}"
+                                    required
+                                >
+                                <div class="text-danger small mt-1" data-validate-for="email"></div>
+                            </div>
+
+                            <div class="col-12 mt-4 pt-3 border-top">
+                                <h6 class="fw-bold mb-3">Change Password</h6>
+                                <p class="text-muted small mb-3">Leave blank if you don't want to change your password.</p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="accountPassword" class="form-label text-secondary small text-uppercase fw-bold">New Password</label>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    class="form-control"
+                                    id="accountPassword"
+                                    placeholder="••••••••"
+                                    autocomplete="new-password"
+                                >
+                                <div class="text-danger small mt-1" data-validate-for="password"></div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="accountPasswordConfirm" class="form-label text-secondary small text-uppercase fw-bold">Confirm Password</label>
+                                <input
+                                    name="password_confirmation"
+                                    type="password"
+                                    class="form-control"
+                                    id="accountPasswordConfirm"
+                                    placeholder="••••••••"
+                                    autocomplete="new-password"
+                                >
+                                <div class="text-danger small mt-1" data-validate-for="password_confirmation"></div>
+                            </div>
+                            
+                            <div class="col-12 mt-4 text-end">
+                                <button type="submit" class="btn btn-primary px-4 fw-medium">
+                                    <i class="bi bi-save me-1"></i> Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

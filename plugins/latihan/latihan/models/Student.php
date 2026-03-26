@@ -10,6 +10,14 @@ class Student extends Model
         'name',
         'subject',
         'is_active',
-        'is_verified'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public $rules = [
+        'name'    => 'required|string|max:255',
+        'subject' => 'required|string|max:255',
     ];
 }

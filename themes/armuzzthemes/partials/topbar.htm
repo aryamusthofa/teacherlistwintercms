@@ -9,7 +9,7 @@
           {% if user %}
             <!-- Logged in state -->
             <div class="d-none d-md-flex align-items-center me-2">
-              <span class="text-secondary small me-2">Hi, <b class="text-dark">{{ user.name }}</b></span>
+              <span class="text-secondary small me-2">Hi, <a href="{{ 'account'|page }}" class="text-dark fw-bold text-decoration-none" style="transition: color 0.2s;" onmouseover="this.classList.add('text-primary')" onmouseout="this.classList.remove('text-primary')">{{ user.name }}</a></span>
             </div>
             <a data-request="onLogout" data-request-data="redirect: '{{ 'welcome'|page }}'" class="btn btn-sm btn-outline-danger" title="Sign Out" style="cursor: pointer;">
               <i class="bi bi-box-arrow-right me-1"></i>

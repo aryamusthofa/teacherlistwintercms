@@ -7,10 +7,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Latihan',
-            'description' => 'Plugin latihan untuk dashboard guru dinamis',
+            'name'        => 'Data Sekolah',
+            'description' => 'Plugin manajemen data guru dan siswa',
             'author'      => 'Latihan',
-            'icon'        => 'icon-leaf'
+            'icon'        => 'icon-graduation-cap',
         ];
     }
 
@@ -27,24 +27,24 @@ class Plugin extends PluginBase
         return [
             'main-menu-latihan' => [
                 'label' => 'Data Sekolah',
-                'url' => \Backend::url('latihan/latihan/teachers'),
-                'icon' => 'icon-graduation-cap',
+                'url'   => \Backend::url('latihan/latihan/teachers'),
+                'icon'  => 'icon-graduation-cap',
                 'order' => 500,
                 'sideMenu' => [
                     'side-menu-teachers' => [
                         'label' => 'Teachers',
-                        'icon' => 'icon-users',
-                        'url' => \Backend::url('latihan/latihan/teachers'),
-                    ]
-                ]
-            ]
+                        'icon'  => 'icon-users',
+                        'url'   => \Backend::url('latihan/latihan/teachers'),
+                    ],
+                ],
+            ],
         ];
     }
-    
+
     public function boot()
     {
-        // Inject backend watermark assets on backend pages
-        \Event::listen('backend.page.beforeDisplay', function($controller, $action, $params) {
+        // Inject backend watermark assets
+        \Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
             if (method_exists($controller, 'addCss')) {
                 $controller->addCss('/plugins/latihan/latihan/assets/css/backend-watermark.css');
             }

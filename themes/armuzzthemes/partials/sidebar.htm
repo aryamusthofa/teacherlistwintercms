@@ -64,6 +64,16 @@
         </a>
       </li>
     </ul>
+
+    <div class="nav-label" data-i18n="account_settings">Account Settings</div>
+    <ul style="padding:0;margin:0">
+      <li class="nav-item">
+        <a class="nav-link {% if this.page.id == 'account' %}active{% endif %}" href="{{ 'account'|page }}">
+          <i class="bi bi-person-circle nav-icon"></i>
+          <span class="nav-text" data-i18n="my_account">My Account</span>
+        </a>
+      </li>
+    </ul>
   </nav>
 
   <div class="sidebar-theme-section">

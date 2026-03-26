@@ -10,6 +10,16 @@ class Teacher extends Model
         'name',
         'subject',
         'is_active',
-        'is_verified'
+        'is_verified',
+    ];
+
+    protected $casts = [
+        'is_active'   => 'boolean',
+        'is_verified' => 'boolean',
+    ];
+
+    public $rules = [
+        'name'    => 'required|string|max:255',
+        'subject' => 'required|string|max:255',
     ];
 }

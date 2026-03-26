@@ -579,12 +579,37 @@ body {
 
 .sidebar.collapsed .nav-link .nav-text {
   opacity: 0;
+  width: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
 .sidebar.collapsed .nav-link {
   justify-content: center;
   padding: 10px;
+  gap: 0;
+}
+
+/* ── Collapsed Brand ── */
+.sidebar.collapsed .sidebar-brand {
+  justify-content: center;
+  padding: 20px 10px 16px;
+  gap: 0;
+}
+
+/* ── Collapsed Theme Section ── */
+.sidebar.collapsed .sidebar-theme-section {
+  padding: 6px;
+}
+
+.sidebar.collapsed .theme-switcher-trigger {
+  justify-content: center;
+  padding: 10px;
+  gap: 0;
+}
+
+.sidebar.collapsed .theme-switcher-trigger .nav-icon {
+  font-size: 1.2rem;
 }
 
 /* Sidebar Toggle Button */
@@ -622,7 +647,41 @@ body {
 
 .sidebar.collapsed .sidebar-toggle .toggle-text {
   opacity: 0;
+  width: 0;
+  overflow: hidden;
   display: none;
+}
+
+.sidebar.collapsed .sidebar-toggle button {
+  padding: 8px;
+  justify-content: center;
+}
+
+/* ── Collapsed Tooltips ── */
+.sidebar.collapsed .nav-link,
+.sidebar.collapsed .theme-switcher-trigger,
+.sidebar.collapsed .sidebar-toggle button {
+  position: relative;
+}
+
+.sidebar.collapsed .nav-link:hover::after,
+.sidebar.collapsed .theme-switcher-trigger:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-card, #333);
+  color: var(--text-primary, #fff);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  pointer-events: none;
 }
 
 /* ── Theme Switcher in Sidebar ── */
@@ -660,8 +719,11 @@ body {
 
 .sidebar.collapsed .theme-switcher-trigger .trigger-text {
   opacity: 0;
+  width: 0;
+  overflow: hidden;
   display: none;
 }
+
 
 /* Theme Picker Modal */
 .theme-picker-overlay {

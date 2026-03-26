@@ -1,9 +1,11 @@
 title: Teachers List
 modelClass: Latihan\Latihan\Models\Teacher
 list: $/latihan/latihan/models/teacher/columns.yaml
+recordUrl: update/:id
+recordsPerPage: 20
 showCheckboxes: true
 toolbar:
     buttons: toolbar
-recordUrl: update/{:id}
 search:
-    prompt: backend::lang.list.search_prompt
+    prompt: Search teachers...
+noRecordsMessage: No teachers found.

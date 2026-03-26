@@ -1,0 +1,31 @@
+fields:
+  name:
+    label: Teacher Full Name
+    type: text
+    span: left
+    placeholder: e.g. Budi Santoso
+    comment: Input the teacher's official name as registered.
+    required: true
+
+  subject:
+    label: Teaching Subject
+    type: text
+    span: right
+    placeholder: e.g. Mathematics / Physics
+    comment: Specify the primary subject taught.
+    required: true
+
+  is_active:
+    label: Deployment Status
+    type: switch
+    span: left
+    default: true
+    comment: Toggle off to temporarily disable this teacher from the public list.
+
+  is_verified:
+    label: Verification Badge
+    type: switch
+    span: right
+    default: false
+    comment: Only verified teachers will show the verification checkmark on the frontend.
+
